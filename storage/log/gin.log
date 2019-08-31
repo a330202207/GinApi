@@ -1,0 +1,6 @@
+{"ClientIp":"127.0.0.1","LatencyTime":871593,"RequestMethod":"GET","RequestUrl":"/","StatusCode":200,"level":"info","msg":"","time":"2019-08-31 16:37:33"}
+{"ClientIp":"127.0.0.1","LatencyTime":633331,"RequestMethod":"GET","RequestUrl":"/","StatusCode":200,"level":"info","msg":"","time":"2019-08-31 16:37:33"}
+{"ClientIp":"127.0.0.1","LatencyTime":720734,"RequestMethod":"GET","RequestUrl":"/","StatusCode":200,"level":"info","msg":"","time":"2019-08-31 16:37:34"}
+{"ClientIp":"127.0.0.1","LatencyTime":680857,"RequestMethod":"GET","RequestUrl":"/","StatusCode":200,"level":"info","msg":"","time":"2019-08-31 16:37:34"}
+time="2019-08-31T16:42:42+08:00" level=info ClientIp=127.0.0.1 LatencyTime=1.095049ms RequestMethod=GET RequestUrl=/ StatusCode=200
+time="2019-08-31T16:42:42+08:00" level=info ClientIp=127.0.0.1 LatencyTime="698.603µs" RequestMethod=GET RequestUrl=/ StatusCode=200
