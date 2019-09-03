@@ -1,11 +1,11 @@
 package app
 
 import (
+	"GinApi/pkg/setting"
+	"GinApi/routes"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"rechargeApi/pkg/setting"
-	"rechargeApi/routes"
 )
 
 func Init() *gin.Engine {

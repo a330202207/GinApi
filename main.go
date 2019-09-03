@@ -1,7 +1,7 @@
 package main
 
 import (
-	"rechargeApi/app"
+	"GinApi/app"
 )
 
 func main() {

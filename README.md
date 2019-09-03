@@ -23,3 +23,11 @@
 ├── views 		   	视图文件
 └── README.md  
 ```
+
+安装依赖包：
+
+github.com/sirupsen/logrus
+github.com/lestrrat-go/file-rotatelogs
+github.com/rifflock/lfshook
+golang.org/x/crypto/bcrypt
+github.com/dgrijalva/jwt-go

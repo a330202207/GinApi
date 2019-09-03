@@ -1,14 +1,14 @@
 package routes
 
 import (
+	api "GinApi/controller/api/v1"
+	"GinApi/controller/backend"
+	"GinApi/controller/frontend"
+	"GinApi/middleware/logger"
+	"GinApi/pkg/setting"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
-	apiservice "rechargeApi/controller/api/v1"
-	"rechargeApi/controller/backend"
-	"rechargeApi/controller/frontend"
-	"rechargeApi/middleware/logger"
-	"rechargeApi/pkg/setting"
 )
 
 //初始化路由
@@ -76,7 +76,7 @@ func loadTemplate(e *gin.Engine) {
 func RegisterApiRouter(e *gin.Engine) {
 	apiRouter := e.Group("/api/v1")
 	{
-		apiRouter.GET("/test/index", apiservice.Test)
+		apiRouter.GET("/test/index", api.Test)
 	}
 }
 
@@ -92,5 +92,7 @@ func RegisterBackendRouter(e *gin.Engine) {
 	admin := e.Group("/admin")
 	{
 		admin.GET("/", backend.Index)
+		admin.GET("/login.html", backend.AdminLoginIndex)
+		admin.GET("/login", backend.AdminLogin)
 	}
 }
