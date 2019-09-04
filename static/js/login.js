@@ -3,16 +3,7 @@ var Login = function () {
     var checkToken = function () {
         token = sessionStorage.getItem("token");
         if (token) {
-            window.location.href = '/admin/index.html?token=' + token;
-            // $.ajax({
-            //     url: "/admin/index.html",
-            //     type: "post",
-            //     dataType: "json",
-            //     data: {token: token},
-            //     success: function (res) {
-            //         console.log(res);
-            //     }
-            // });
+            window.location.href = '/admin/index.html';
         }
     }
 
@@ -50,17 +41,7 @@ var Login = function () {
                     if (res.code == 200) {
                         token = res.data.token;
                         sessionStorage.setItem("token", token);
-                        window.location.href = '/admin/index.html?token=' + token;
-
-                        // $.ajax({
-                        //     url: "/admin/login",
-                        //     type: "post",
-                        //     dataType: "json",
-                        //     data: {token: token},
-                        //     success: function (res) {
-                        //         console.log(res);
-                        //     }
-                        // });
+                        window.location.href = '/admin/index.html?';
                     } else {
                         layer.msg(res.msg, {icon: 2});
                         setTimeout(function () {

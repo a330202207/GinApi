@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"github.com/gin-gonic/gin"
+	"time"
+)
 
 type Admin struct {
 	Model
@@ -19,4 +22,9 @@ func GetAdmin(maps interface{}) (admin Admin, err error) {
 	err = db.Model(&Admin{}).Where(maps).First(&admin).Error
 	//err = db.Debug().Model(&Admin{}).Where(maps).First(&admin).Error
 	return
+}
+
+//获取session
+func GetSessions(c *gin.Context) {
+
 }
