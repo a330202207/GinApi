@@ -1,5 +1,23 @@
 var Login = function () {
+
+    var checkToken = function () {
+        token = sessionStorage.getItem("token");
+        if (token) {
+            window.location.href = '/admin/index.html?token=' + token;
+            // $.ajax({
+            //     url: "/admin/index.html",
+            //     type: "post",
+            //     dataType: "json",
+            //     data: {token: token},
+            //     success: function (res) {
+            //         console.log(res);
+            //     }
+            // });
+        }
+    }
+
     var handleLogin = function () {
+        checkToken();
         var form = $("#form");
         var sumit = $("#submit");
         sumit.click(function () {
@@ -9,35 +27,49 @@ var Login = function () {
 
             if (username == '') {
                 layer.msg('请填写用户名!', {icon: 2});
-                sumit.button('reset')
+                sumit.button('reset');
                 return
             }
 
             if (password == '') {
                 layer.msg('请填写密码!', {icon: 2});
-                sumit.button('reset')
+                sumit.button('reset');
                 return
             }
 
-             $.ajax({
-                 url : "/admin/login",
-                 type : "post",
-                 dataType : "json",
-                 data: {
-                     username: username,
-                     password: password
-                 },
-                 success : function(res) {
-                     console.log(res)
-                     //
-                     // if (res.status == 0) {
-                     //     window.location.href = '/admin/index/index';
-                     // } else {
-                     //     layer.msg(res.msg, {icon: 2});
-                     //     return false;
-                     // }
-                 }
-             });
+            $.ajax({
+                url: "/admin/index.html",
+                type: "post",
+                dataType: "json",
+                data: {
+                    username: username,
+                    password: password
+                },
+                success: function (res) {
+                    console.log(res);
+                    if (res.code == 200) {
+                        token = res.data.token;
+                        sessionStorage.setItem("token", token);
+                        window.location.href = '/admin/index.html?token=' + token;
+
+                        // $.ajax({
+                        //     url: "/admin/login",
+                        //     type: "post",
+                        //     dataType: "json",
+                        //     data: {token: token},
+                        //     success: function (res) {
+                        //         console.log(res);
+                        //     }
+                        // });
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                        setTimeout(function () {
+                            location.reload()
+                        }, 2000);
+                        return false;
+                    }
+                }
+            });
         });
     }
 

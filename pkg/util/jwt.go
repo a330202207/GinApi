@@ -9,31 +9,27 @@ import (
 var jwtSecret = []byte(setting.ServerSetting.JwtSecret)
 
 type Claims struct {
-	Name     string `json:"name"`
-	Password string `json:"password"`
 	jwt.StandardClaims
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 //生成Token
-func GenerateToken(username, password string) (string, time.Time, error) {
-	nowTime := time.Now()
-	expriTime := nowTime.Add(3 * time.Hour)
+func GenerateToken(Username, Password string) (string, time.Time, error) {
+	expireTime := time.Now().Add(3 * time.Hour)
 
 	claims := Claims{
-		username,
-		password,
 		jwt.StandardClaims{
-			ExpiresAt: expriTime.Unix(),
+			ExpiresAt: int64(expireTime.Unix()),
 			Issuer:    "GinApi",
 		},
+		Username,
+		Password,
 	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	//指定加密算法为HS256
-	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
-
-	//生成Token
-	token, err := tokenClaims.SignedString(jwtSecret)
-	return token, expriTime, err
+	tokenSting, err := token.SignedString(jwtSecret)
+	return tokenSting, expireTime, err
 }
 
 //解析Token

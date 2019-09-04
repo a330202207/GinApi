@@ -4,8 +4,9 @@ import (
 	"GinApi/middleware/error"
 	"GinApi/models"
 	"GinApi/pkg/util"
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/go-ozzo/ozzo-validation"
 )
 
 //后台登陆页
@@ -17,51 +18,47 @@ func AdminLoginIndex(c *gin.Context) {
 //登陆
 func AdminLogin(c *gin.Context) {
 	username := c.DefaultPostForm("username", "")
-	password := c.DefaultPostForm("passoword", "")
-	code := error.INVALID_PARAMS
+	password := c.DefaultPostForm("password", "")
+
+	validErr := validation.Errors{
+		"username": validation.Validate(username, validation.Required.Error("username不能为空")),
+		"password": validation.Validate(password, validation.Required.Error("password不能为空")),
+	}.Filter()
+
+	if validErr != nil {
+		util.JsonErrResponse(c, error.INVALID_PARAMS)
+		return
+	}
 
 	maps := make(map[string]interface{})
 	data := make(map[string]interface{})
 
 	maps["user_name"] = username
+
 	user, err := models.GetAdmin(maps)
 	if err != nil {
 		//用户不存在
-		code := error.INVALID_PARAMS
-		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"msg":  error.GetMsg(code),
-			"data": data,
-		})
-
+		util.JsonErrResponse(c, error.ERROR_NOT_EXIST_USER)
 		return
 	}
 
 	hashPassword := user.Password
 	if !util.PasswordVerify(password, hashPassword) {
 		//密码错误
-		code := error.ERROR_NOT_EXIST_USER
-		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"msg":  error.GetMsg(code),
-			"data": data,
-		})
+		util.JsonErrResponse(c, error.ERROR_NOT_EXIST_USER)
+		return
 	}
 
-	code = error.SUCCESS
-
-	//生成token,session
-	token, time, err := util.GenerateToken(user.Username, password)
+	//生成token
+	token, time, err := util.GenerateToken(user.UserName, hashPassword)
 	if err != nil {
-		code = error.ERROR_AUTH_TOKEN
+		//Token错误
+		util.JsonErrResponse(c, error.ERROR_AUTH_TOKEN)
+		return
 	} else {
 		data["token"] = token
 		data["exp_time"] = time
 	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"code": code,
-		"msg":  error.GetMsg(code),
-		"data": data,
-	})
+	fmt.Println("data:", data)
+	util.JsonSuccessResponse(c, error.SUCCESS, data)
 }

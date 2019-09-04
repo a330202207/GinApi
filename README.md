@@ -26,8 +26,16 @@
 
 安装依赖包：
 
+日志：
 github.com/sirupsen/logrus
 github.com/lestrrat-go/file-rotatelogs
 github.com/rifflock/lfshook
+
+数据加密:
 golang.org/x/crypto/bcrypt
+
+jwt:
 github.com/dgrijalva/jwt-go
+
+数据验证：
+github.com/go-ozzo/ozzo-validation

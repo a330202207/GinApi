@@ -5,7 +5,7 @@ import "time"
 type Admin struct {
 	Model
 
-	Username  string    `gorm:"default:''" json:"user_name"` //用户名
+	UserName  string    `gorm:"default:''" json:"user_name"` //用户名
 	Password  string    `gorm:"default:''" json:"password"`  //密码
 	CreateIp  string    `gorm:"default:''" json:"create_ip"` //创建时IP
 	LoginIp   string    `gorm:"default:''" json:"login_ip"`  //登录时IP
@@ -14,8 +14,9 @@ type Admin struct {
 	State     int       `json:"state"`
 }
 
-//获取
+//获取用户
 func GetAdmin(maps interface{}) (admin Admin, err error) {
-	err = db.Preload("Group").Model(&Admin{}).Where(maps).First(&admin).Error
+	err = db.Model(&Admin{}).Where(maps).First(&admin).Error
+	//err = db.Debug().Model(&Admin{}).Where(maps).First(&admin).Error
 	return
 }

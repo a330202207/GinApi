@@ -93,6 +93,7 @@ func RegisterBackendRouter(e *gin.Engine) {
 	{
 		admin.GET("/", backend.Index)
 		admin.GET("/login.html", backend.AdminLoginIndex)
-		admin.GET("/login", backend.AdminLogin)
+		admin.POST("/login", backend.AdminLogin)
+		admin.GET("/index.html", backend.Index)
 	}
 }
