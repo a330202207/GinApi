@@ -6,9 +6,10 @@ import (
 )
 
 func Index(c *gin.Context) {
-	sessions := admin.GetSessions(c)
+	//sessions := models.GetSessions(c)
+
 	title := "Hello Admin!"
-	c.HTML(http.StatusOK, "index.html", gin.H{
+	c.HTML(http.StatusOK, "admin_index.html", gin.H{
 		"title": title,
 	})
 }

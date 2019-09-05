@@ -4,6 +4,7 @@ var MsgFlags = map[int]string{
 	SUCCESS:        "操作成功",
 	ERROR:          "系统错误",
 	UNPASS:         "未通过验证",
+	NEED_LOGIN:     "需要登录",
 	INVALID_PARAMS: "请求参数错误",
 
 	ERROR_AUTH_CHECK_TOKEN_FAIL:    "Token鉴权失败",
@@ -13,6 +14,7 @@ var MsgFlags = map[int]string{
 
 	ERROR_EXIST_USER:     "用户已经存在了",
 	ERROR_NOT_EXIST_USER: "用户名或密码错误",
+	ERROR_DISABLE_USER:   "用户已被禁止，请联系管理员",
 }
 
 //获取信息码

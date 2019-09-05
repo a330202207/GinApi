@@ -26,5 +26,5 @@ func GetAdmin(maps interface{}) (admin Admin, err error) {
 
 //获取session
 func GetSessions(c *gin.Context) {
-
+	return
 }

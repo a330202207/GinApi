@@ -4,15 +4,16 @@ import (
 	"GinApi/middleware/error"
 	"GinApi/models"
 	"GinApi/pkg/util"
-	"fmt"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/go-ozzo/ozzo-validation"
+	validation "github.com/go-ozzo/ozzo-validation"
 )
 
 //后台登陆页
 func AdminLoginIndex(c *gin.Context) {
-	sessions := "ss"
-	c.HTML(200, "login.html", gin.H{"sessions": sessions})
+	session := sessions.Default(c)
+	uid := session.Get("user_id")
+	c.HTML(200, "login.html", gin.H{"sessions": uid})
 }
 
 //登陆
@@ -49,6 +50,12 @@ func AdminLogin(c *gin.Context) {
 		return
 	}
 
+	if user.State == 2 || user.State == 3 {
+		//用户被禁止/删除
+		util.JsonErrResponse(c, error.ERROR_DISABLE_USER)
+		return
+	}
+
 	//生成token
 	token, time, err := util.GenerateToken(user.UserName, hashPassword)
 	if err != nil {
@@ -59,6 +66,5 @@ func AdminLogin(c *gin.Context) {
 		data["token"] = token
 		data["exp_time"] = time
 	}
-	fmt.Println("data:", data)
 	util.JsonSuccessResponse(c, error.SUCCESS, data)
 }

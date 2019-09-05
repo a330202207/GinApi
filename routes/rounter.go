@@ -91,9 +91,14 @@ func RegisterFrontendRouter(e *gin.Engine) {
 func RegisterBackendRouter(e *gin.Engine) {
 	admin := e.Group("/admin")
 	{
-		admin.GET("/", backend.Index)
+		//登录页
 		admin.GET("/login.html", backend.AdminLoginIndex)
+
+		//登录
 		admin.POST("/login", backend.AdminLogin)
+
+		//首页
 		admin.GET("/index.html", backend.Index)
+
 	}
 }

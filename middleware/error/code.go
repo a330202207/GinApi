@@ -4,6 +4,7 @@ const (
 	SUCCESS        = 200
 	ERROR          = 500
 	INVALID_PARAMS = 400
+	NEED_LOGIN     = 401
 	UNPASS         = 403
 
 	//Token
@@ -15,4 +16,5 @@ const (
 	//用户
 	ERROR_EXIST_USER     = 30001
 	ERROR_NOT_EXIST_USER = 30002
+	ERROR_DISABLE_USER   = 30003
 )

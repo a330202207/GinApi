@@ -8,7 +8,7 @@ var Login = function () {
     }
 
     var handleLogin = function () {
-        checkToken();
+        // checkToken();
         var form = $("#form");
         var sumit = $("#submit");
         sumit.click(function () {
@@ -29,7 +29,7 @@ var Login = function () {
             }
 
             $.ajax({
-                url: "/admin/index.html",
+                url: "/admin/login",
                 type: "post",
                 dataType: "json",
                 data: {
@@ -41,7 +41,7 @@ var Login = function () {
                     if (res.code == 200) {
                         token = res.data.token;
                         sessionStorage.setItem("token", token);
-                        window.location.href = '/admin/index.html?';
+                        window.location.href = '/admin/index.html';
                     } else {
                         layer.msg(res.msg, {icon: 2});
                         setTimeout(function () {
