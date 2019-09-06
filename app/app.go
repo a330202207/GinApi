@@ -25,7 +25,7 @@ func Init() *gin.Engine {
 
 //加载服务
 func LoadServer() {
-	//数据库
+	//加载数据库
 	models.Database()
 }
 

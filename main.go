@@ -6,7 +6,7 @@ import (
 
 func main() {
 
-	//初始化配置文件
+	//初始化
 	engine := app.Init()
 
 	//运行服务
