@@ -43,29 +43,14 @@ type Server struct {
 	UploadUrl  string
 	UploadPath string
 
-	LogoMobileUrl string
-	LogoPcUrl     string
-	LogoWaterUrl  string
+	TimeZone string
 
-	SitePre        string
-	SiteUrl        string
-	SiteName       string
-	SiteBrief      string
-	SiteSeoWord    string
-	TimeZone       string
-	Lang           string
-	RunLevel       int
-	RunLevelReason string
-
-	CookieDomain string
-	CookiePath   string
+	SessionName  string
+	SessionStore string
 
 	RuntimeRootPath string
 	LogPath         string
-	LogSavePath     string
-	LogSaveName     string
-	TimeFormat      string
-	LogFileExt      string
+	LogName         string
 }
 
 var ServerSetting = &Server{}
@@ -75,7 +60,7 @@ type Image struct {
 	ImageMaxSize    int
 	ImageAlloweXts  string
 	ImageAllowExts  []string
-	RuntimeRootPath string
+	RunTimeRootPath string
 }
 
 var ImageSetting = &Image{}

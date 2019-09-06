@@ -6,6 +6,7 @@ var MsgFlags = map[int]string{
 	UNPASS:         "未通过验证",
 	NEED_LOGIN:     "需要登录",
 	INVALID_PARAMS: "请求参数错误",
+	NOROUTE:        "找不到该路由",
 
 	ERROR_AUTH_CHECK_TOKEN_FAIL:    "Token鉴权失败",
 	ERROR_AUTH_CHECK_TOKEN_TIMEOUT: "Token已超时",

@@ -6,6 +6,7 @@ const (
 	INVALID_PARAMS = 400
 	NEED_LOGIN     = 401
 	UNPASS         = 403
+	NOROUTE        = 404
 
 	//Token
 	ERROR_AUTH_CHECK_TOKEN_FAIL    = 20001

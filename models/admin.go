@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
@@ -17,14 +17,16 @@ type Admin struct {
 	State     int       `json:"state"`
 }
 
-//获取用户
-func GetAdmin(maps interface{}) (admin Admin, err error) {
-	err = db.Model(&Admin{}).Where(maps).First(&admin).Error
-	//err = db.Debug().Model(&Admin{}).Where(maps).First(&admin).Error
-	return
+//检查用户密码
+func (admin *Admin) CheckPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(admin.Password), []byte(password))
+	return err == nil
 }
 
-//获取session
-func GetSessions(c *gin.Context) {
-	return
+//检查用户状态
+func (admin *Admin) CheckStatus() bool {
+	if admin.State == 2 || admin.State == 3 {
+		return false
+	}
+	return true
 }

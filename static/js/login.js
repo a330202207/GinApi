@@ -33,7 +33,7 @@ var Login = function () {
                 type: "post",
                 dataType: "json",
                 data: {
-                    username: username,
+                    user_name: username,
                     password: password
                 },
                 success: function (res) {

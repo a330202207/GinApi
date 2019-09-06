@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"GinApi/pkg/setting"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/lestrrat-go/file-rotatelogs"
@@ -13,8 +14,9 @@ import (
 
 // 日志记录到文件
 func LoggerToFile() gin.HandlerFunc {
-	logFilePath := "storage/log/"
-	logFileName := "gin.log"
+
+	logFilePath := setting.ServerSetting.LogPath
+	logFileName := setting.ServerSetting.LogName
 
 	//日志文件
 	fileName := path.Join(logFilePath, logFileName)

@@ -39,3 +39,5 @@ github.com/dgrijalva/jwt-go
 
 数据验证：
 github.com/go-ozzo/ozzo-validation
+
+https://github.com/gin-contrib/cors

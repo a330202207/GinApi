@@ -4,7 +4,10 @@ import (
 	api "GinApi/controller/api/v1"
 	"GinApi/controller/backend"
 	"GinApi/controller/frontend"
+	"GinApi/middleware/cors"
+	"GinApi/middleware/error"
 	"GinApi/middleware/logger"
+	"GinApi/middleware/session"
 	"GinApi/pkg/setting"
 	"github.com/gin-gonic/gin"
 	"html/template"
@@ -13,6 +16,8 @@ import (
 
 //初始化路由
 func InitRouter(e *gin.Engine) {
+	//session
+	e.Use(session.Session())
 
 	// 使用 Logger 中间件
 	e.Use(gin.Logger())
@@ -22,6 +27,9 @@ func InitRouter(e *gin.Engine) {
 
 	// 使用日志中间件
 	e.Use(logger.LoggerToFile())
+
+	//跨域
+	e.Use(cors.Cors())
 
 	gin.SetMode(setting.ServerSetting.RunMode)
 
@@ -36,16 +44,16 @@ func InitRouter(e *gin.Engine) {
 
 	e.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
-			"code": 404,
-			"msg":  "找不到该路由",
+			"code": error.NOROUTE,
+			"msg":  error.GetMsg(error.NOROUTE),
 		})
 		return
 	})
 
 	e.NoMethod(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
-			"code": 404,
-			"msg":  "找不到该方法",
+			"code": error.NOROUTE,
+			"msg":  error.GetMsg(error.NOROUTE),
 		})
 		return
 	})
@@ -80,6 +88,7 @@ func RegisterApiRouter(e *gin.Engine) {
 	}
 }
 
+//前台
 func RegisterFrontendRouter(e *gin.Engine) {
 	web := e.Group("")
 	{
@@ -88,6 +97,7 @@ func RegisterFrontendRouter(e *gin.Engine) {
 	}
 }
 
+//后台
 func RegisterBackendRouter(e *gin.Engine) {
 	admin := e.Group("/admin")
 	{

@@ -1,6 +1,7 @@
 package app
 
 import (
+	"GinApi/models"
 	"GinApi/pkg/setting"
 	"GinApi/routes"
 	"fmt"
@@ -8,6 +9,7 @@ import (
 	"net/http"
 )
 
+//初始化
 func Init() *gin.Engine {
 
 	engine := gin.New()
@@ -15,9 +17,19 @@ func Init() *gin.Engine {
 	//初始化路由
 	routes.InitRouter(engine)
 
+	//加载服务
+	LoadServer()
+
 	return engine
 }
 
+//加载服务
+func LoadServer() {
+	//数据库
+	models.Database()
+}
+
+//运行
 func Run(e *gin.Engine) {
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", setting.ServerSetting.HttpPort),
