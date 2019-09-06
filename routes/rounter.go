@@ -31,6 +31,7 @@ func InitRouter(e *gin.Engine) {
 	//跨域
 	e.Use(cors.Cors())
 
+	//设置环境
 	gin.SetMode(setting.ServerSetting.RunMode)
 
 	// 模板函数
