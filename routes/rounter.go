@@ -1,16 +1,12 @@
 package routes
 
 import (
-	api "GinApi/controller/api/v1"
-	"GinApi/controller/backend"
-	"GinApi/controller/frontend"
+	"GinApi/config"
 	"GinApi/middleware/cors"
-	"GinApi/middleware/error"
 	"GinApi/middleware/logger"
 	"GinApi/middleware/session"
-	"GinApi/pkg/setting"
+	"GinApi/package/error"
 	"github.com/gin-gonic/gin"
-	"html/template"
 	"net/http"
 )
 
@@ -32,16 +28,16 @@ func InitRouter(e *gin.Engine) {
 	e.Use(cors.Cors())
 
 	//设置环境
-	gin.SetMode(setting.ServerSetting.RunMode)
+	gin.SetMode(config.ServerSetting.RunMode)
 
 	// 模板函数
-	e.SetFuncMap(template.FuncMap{
-		"unescaped":   unescaped,
-		"strtime":     StrTime,
-		"plus1":       selfPlus,
-		"numplusplus": numPlusPlus,
-		"strip":       Long2IPString,
-	})
+	//e.SetFuncMap(template.FuncMap{
+	//	"unescaped":   util.unescaped,
+	//	"strtime":     util.StrTime,
+	//	"plus1":       util.selfPlus,
+	//	"numplusplus": util.numPlusPlus,
+	//	"strip":       util.Long2IPString,
+	//})
 
 	e.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -72,6 +68,7 @@ func InitRouter(e *gin.Engine) {
 	RegisterBackendRouter(e)
 }
 
+//加载模板
 func loadTemplate(e *gin.Engine) {
 	//加载views文件夹下所有的文件
 	e.LoadHTMLGlob("views/*/**/***")
@@ -79,37 +76,4 @@ func loadTemplate(e *gin.Engine) {
 	// 推荐使用绝对路径 相当于简历了软连接--快捷方式
 	e.StaticFS("/static", http.Dir("./static"))
 	e.StaticFS("/upload", http.Dir("./upload"))
-}
-
-//注册API模块路由
-func RegisterApiRouter(e *gin.Engine) {
-	apiRouter := e.Group("/api/v1")
-	{
-		apiRouter.GET("/test/index", api.Test)
-	}
-}
-
-//前台
-func RegisterFrontendRouter(e *gin.Engine) {
-	web := e.Group("")
-	{
-		// 首页
-		web.GET("/", frontend.Index)
-	}
-}
-
-//后台
-func RegisterBackendRouter(e *gin.Engine) {
-	admin := e.Group("/admin")
-	{
-		//登录页
-		admin.GET("/login.html", backend.AdminLoginIndex)
-
-		//登录
-		admin.POST("/login", backend.AdminLogin)
-
-		//首页
-		admin.GET("/index.html", backend.Index)
-
-	}
 }

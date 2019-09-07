@@ -1,7 +1,7 @@
 package util
 
 import (
-	"GinApi/middleware/error"
+	"GinApi/package/error"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

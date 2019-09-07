@@ -1,9 +1,9 @@
 package backend
 
 import (
-	"GinApi/middleware/error"
-	"GinApi/pkg/util"
+	"GinApi/package/error"
 	"GinApi/service"
+	"GinApi/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )

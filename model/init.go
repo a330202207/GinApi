@@ -1,7 +1,7 @@
-package models
+package model
 
 import (
-	"GinApi/pkg/setting"
+	"GinApi/config"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -17,12 +17,12 @@ func Database() {
 		dbType, dbName, user, password, host, tablePrefix string
 	)
 
-	dbType = setting.DatabaseSetting.Type
-	dbName = setting.DatabaseSetting.Name
-	user = setting.DatabaseSetting.User
-	password = setting.DatabaseSetting.Password
-	host = setting.DatabaseSetting.Host
-	tablePrefix = setting.DatabaseSetting.TablePrefix
+	dbType = config.DatabaseSetting.Type
+	dbName = config.DatabaseSetting.Name
+	user = config.DatabaseSetting.User
+	password = config.DatabaseSetting.Password
+	host = config.DatabaseSetting.Host
+	tablePrefix = config.DatabaseSetting.TablePrefix
 
 	//连接数据库
 	db, err := gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
@@ -46,11 +46,6 @@ func Database() {
 
 	DB = db
 	migration()
-}
-
-//关闭数据库
-func CloseDB() {
-	defer DB.Close()
 }
 
 //获取数据库

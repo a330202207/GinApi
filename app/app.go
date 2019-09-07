@@ -1,8 +1,8 @@
 package app
 
 import (
-	"GinApi/models"
-	"GinApi/pkg/setting"
+	"GinApi/config"
+	"GinApi/model"
 	"GinApi/routes"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -26,16 +26,16 @@ func Init() *gin.Engine {
 //加载服务
 func LoadServer() {
 	//加载数据库
-	models.Database()
+	model.Database()
 }
 
 //运行
 func Run(e *gin.Engine) {
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.ServerSetting.HttpPort),
+		Addr:           fmt.Sprintf(":%d", config.ServerSetting.HttpPort),
 		Handler:        e,
-		ReadTimeout:    setting.ServerSetting.ReadTimeout,
-		WriteTimeout:   setting.ServerSetting.WriteTimeout,
+		ReadTimeout:    config.ServerSetting.ReadTimeout,
+		WriteTimeout:   config.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 

@@ -1,26 +1,41 @@
 # GinApi
 ```
 目录
-├── config  系统配置
-│    └── config.ini 配置文件
+├── app             系统配置
+│ 
+├── config          系统配置
+│    ├── config.ini     配置文件
+│    └── LoadConfig     加载配置文件
 │
-├── controller      控制器
+├── controller      控制层
 │     
 ├── doc             文档存放 
 │     
 ├── middleware      中间件
-│    ├── err          
-│    ├── jwt                
-│    └── loger          
-├── models          模型
+│    ├── casbin         权限          
+│    ├── jwt            jwt        
+│    └── loger          日志    
+│ 
+├── model           模型层
+│ 
 ├── doc             文档存放
-├── pkg             第三方包 
-│    └── setting    系统设置        
+│ 
+├── package         第三方包 
+│    ├── error          系统错误  
+│    └── loger          日志  
+│        
 ├── routes          路由
-├── service         服务
+│ 
+├── service         服务层
+│ 
 ├── static          静态文件
+│ 
 ├── storage         缓存日志文件
+│ 
+├── util            工具
+│ 
 ├── views           视图文件
+│ 
 └── README.md  
 ```
 

@@ -1,8 +1,9 @@
 package service
 
 import (
-	"GinApi/middleware/error"
-	"GinApi/models"
+	"GinApi/model"
+	"GinApi/package/error"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type AdminLoginService struct {
@@ -11,22 +12,39 @@ type AdminLoginService struct {
 }
 
 //登陆
-func (service *AdminLoginService) Login() (models.Admin, int) {
-	var admin models.Admin
+func (service *AdminLoginService) Login() (model.Admin, int) {
 
-	if err := models.DB.Where("user_name = ?", service.UserName).First(&admin).Error; err != nil {
+	admin, err := model.GetAdmin(service.UserName)
+	if err != nil {
 		return admin, error.ERROR_NOT_EXIST_USER
 	}
 
 	//密码不对
-	if admin.CheckPassword(service.Password) == false {
+	if CheckPassword(admin.Password, service.Password) == false {
 		return admin, error.ERROR_NOT_EXIST_USER
 	}
 
 	//禁用账户
-	if admin.CheckStatus() == false {
+	if CheckStatus(admin.State) == false {
 		return admin, error.ERROR_DISABLE_USER
 	}
 
 	return admin, error.SUCCESS
+}
+
+//检查用户密码
+func CheckPassword(hashPassword, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(password))
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+//检查用户状态
+func CheckStatus(status int) bool {
+	if status == 2 || status == 3 {
+		return false
+	}
+	return true
 }

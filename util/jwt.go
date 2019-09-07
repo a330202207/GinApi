@@ -1,12 +1,12 @@
 package util
 
 import (
-	"GinApi/pkg/setting"
+	"GinApi/config"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
 
-var jwtSecret = []byte(setting.ServerSetting.JwtSecret)
+var jwtSecret = []byte(config.ServerSetting.JwtSecret)
 
 type Claims struct {
 	jwt.StandardClaims

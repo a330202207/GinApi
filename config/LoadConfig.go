@@ -1,9 +1,8 @@
-package setting
+package config
 
 import (
 	"github.com/go-ini/ini"
 	"log"
-	"strings"
 	"time"
 )
 
@@ -40,39 +39,16 @@ type Server struct {
 	JwtSecret string
 	ViewUrl   string
 
-	UploadUrl  string
-	UploadPath string
-
 	TimeZone string
 
 	SessionName  string
 	SessionStore string
 
-	RuntimeRootPath string
-	LogPath         string
-	LogName         string
+	LogPath string
+	LogName string
 }
 
 var ServerSetting = &Server{}
-
-type Image struct {
-	ImageSavePath   string
-	ImageMaxSize    int
-	ImageAlloweXts  string
-	ImageAllowExts  []string
-	RunTimeRootPath string
-}
-
-var ImageSetting = &Image{}
-
-type Smtp struct {
-	EmailUser string
-	EmailPass string
-	EmailHost string
-	EmailPort string
-}
-
-var SmtpSetting = &Smtp{}
 
 func init() {
 	var err error
@@ -85,12 +61,8 @@ func init() {
 	//加载服务
 	loadServer()
 
-	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
-	ServerSetting.WriteTimeout = ServerSetting.ReadTimeout * time.Second
-
-	RedisSetting.RedisIdleTimeout = RedisSetting.RedisIdleTimeout * time.Second
-	ImageSetting.ImageAllowExts = strings.Split(ImageSetting.ImageAlloweXts, ",")
-
+	//服务超时设置
+	serverTimeOut()
 }
 
 //加载服务
@@ -98,8 +70,14 @@ func loadServer() {
 	mapToSection("server", ServerSetting)
 	mapToSection("database", DatabaseSetting)
 	mapToSection("redis", RedisSetting)
-	mapToSection("image", ImageSetting)
-	mapToSection("smtp", SmtpSetting)
+}
+
+//服务超时设置
+func serverTimeOut() {
+	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
+	ServerSetting.WriteTimeout = ServerSetting.ReadTimeout * time.Second
+	RedisSetting.RedisIdleTimeout = RedisSetting.RedisIdleTimeout * time.Second
+
 }
 
 //映射服务

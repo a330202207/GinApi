@@ -1358,3 +1358,14 @@ time="2019-08-31T16:42:42+08:00" level=info ClientIp=127.0.0.1 LatencyTime="698.
 {"ClientIp":"127.0.0.1","LatencyTime":121101,"RequestMethod":"GET","RequestUrl":"/static/js/layer/theme/default/layer.css?v=3.1.1","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 16:06:39"}
 {"ClientIp":"127.0.0.1","LatencyTime":64942650,"RequestMethod":"POST","RequestUrl":"/admin/login","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 16:06:43"}
 {"ClientIp":"127.0.0.1","LatencyTime":71796814,"RequestMethod":"POST","RequestUrl":"/admin/login","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 16:08:37"}
+{"ClientIp":"127.0.0.1","LatencyTime":1287907,"RequestMethod":"GET","RequestUrl":"/admin/login.html","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":1521331,"RequestMethod":"GET","RequestUrl":"/static/css/login-2.min.css","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":7353839,"RequestMethod":"GET","RequestUrl":"/static/css/font-awesome.min.css","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":7859938,"RequestMethod":"GET","RequestUrl":"/static/css/bootstrap.min.css","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":2118611,"RequestMethod":"GET","RequestUrl":"/static/css/components.min.css","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":1455859,"RequestMethod":"GET","RequestUrl":"/static/js/bootstrap.min.js","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":1722358,"RequestMethod":"GET","RequestUrl":"/static/js/jquery.min.js","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":179127,"RequestMethod":"GET","RequestUrl":"/static/js/app.min.js","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":189290,"RequestMethod":"GET","RequestUrl":"/static/js/layer/layer.js","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":149238,"RequestMethod":"GET","RequestUrl":"/static/js/login.js","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}
+{"ClientIp":"127.0.0.1","LatencyTime":129539,"RequestMethod":"GET","RequestUrl":"/static/js/layer/theme/default/layer.css?v=3.1.1","StatusCode":200,"level":"info","msg":"","time":"2019-09-06 17:30:30"}

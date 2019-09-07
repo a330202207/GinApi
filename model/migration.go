@@ -1,4 +1,4 @@
-package models
+package model
 
 //执行数据迁移
 
