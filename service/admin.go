@@ -6,26 +6,26 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type AdminLoginService struct {
+type AdminLoginInfo struct {
 	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
 	Password string `form:"password" json:"password" binding:"required,min=6,max=40"`
 }
 
 //登陆
-func (service *AdminLoginService) Login() (model.Admin, int) {
-
-	admin, err := model.GetAdmin(service.UserName)
+func (loginInfo *AdminLoginInfo) Login() (model.Admin, int) {
+	userName := map[string]interface{}{"user_name": loginInfo.UserName}
+	admin, err := model.GetAdmin(userName)
 	if err != nil {
 		return admin, error.ERROR_NOT_EXIST_USER
 	}
 
 	//密码不对
-	if CheckPassword(admin.Password, service.Password) == false {
+	if CheckPassword(admin.Password, loginInfo.Password) == false {
 		return admin, error.ERROR_NOT_EXIST_USER
 	}
 
 	//禁用账户
-	if CheckStatus(admin.State) == false {
+	if CheckStatus(admin.Status) == false {
 		return admin, error.ERROR_DISABLE_USER
 	}
 
@@ -47,4 +47,61 @@ func CheckStatus(status int) bool {
 		return false
 	}
 	return true
+}
+
+type AdminInfo struct {
+	ID       int    `form:"id" json:"id"`
+	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
+	Password string `form:"password" json:"password" binding:"required,min=6,max=40"`
+	CreateIp string `json:"login_ip"`
+	Status   int    `form:"status" json:"status" binding:"required"`
+}
+
+//添加用户
+func (adminInfo *AdminInfo) AdminAdd() int {
+
+	userName := map[string]interface{}{"user_name": adminInfo.UserName, "status": 1}
+	isExist := model.ExistAdmin(userName)
+
+	if isExist == true {
+		return error.ERROR_EXIST_USER
+	}
+
+	hashPassword, err := SetPassword(adminInfo.Password)
+	if err == false {
+		return error.ERROR_PASSWORD_USER
+	}
+	admin := model.Admin{
+		UserName: adminInfo.UserName,
+		CreateIp: adminInfo.CreateIp,
+		Password: hashPassword,
+	}
+
+	if err := model.AddAdmin(&admin); err != nil {
+		return error.ERROR_SQL_INSERT_FAIL
+	}
+	return error.SUCCESS
+}
+
+//设置密码
+func SetPassword(password string) (string, bool) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", false
+	}
+	return string(hash), true
+}
+
+func (admin *AdminInfo) AdminDel() int {
+	userName := map[string]interface{}{"id": admin.ID, "status": 1}
+	isExist := model.ExistAdmin(userName)
+	if isExist == false {
+		return error.ERROR_NOT_EXIST_USER
+	}
+
+	err := model.DelAdmin(map[string]interface{}{"id": admin.ID})
+	if err != nil {
+		return error.ERROR_SQL_DELETE_FAIL
+	}
+	return error.SUCCESS
 }

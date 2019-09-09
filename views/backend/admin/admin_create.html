@@ -1,0 +1,91 @@
+{{ template "layout/admin_header" }}
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin/backend_index.html">首页</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="/admin/admin_index.html">管理员列表</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <span>添加管理员</span>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bubble font-green-sharp"></i>
+                            <span class="caption-subject font-green-sharp sbold">管理员</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <form class="form-horizontal" id="form" action="/admin/add" method="post">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="title">
+                                    管理员名称
+                                    <span class="required" aria-required="true">*</span>
+                                </label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="user_name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="title">
+                                    密码
+                                    <span class="required" aria-required="true">*</span>
+                                </label>
+                                <div class="col-md-5">
+                                    <input type="password" class="form-control" name="password" value="">
+                                </div>
+                            </div>
+                            <div class="form-group form-md-radios">
+                                <label class="col-md-3 control-label" for="title">是否开启</label>
+                                <div class="col-md-9">
+                                    <div class="md-radio-list">
+                                        <div class="md-radio">
+                                            <input type="radio" id="checkbox1_6" name="status" value="2" class="md-radiobtn">
+                                            <label for="checkbox1_6">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> 是 </label>
+                                        </div>
+                                        <div class="md-radio">
+                                            <input type="radio" checked id="checkbox1_7" name="status" value="1" class="md-radiobtn">
+                                            <label for="checkbox1_7">
+                                                <span class="inc"></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> 否 </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="title"></label>
+                                <div class="col-md-5">
+                                    <button type="button" id="submit" class="btn green btn-circle" data-loading-text="正在提交...">
+                                        保存
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT BODY -->
+</div>
+
+{{ template "layout/admin_footer" }}

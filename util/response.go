@@ -32,3 +32,10 @@ func JsonErrResponse(c *gin.Context, errCode int) {
 	Context["msg"] = error.GetMsg(errCode)
 	JsonResponse(c, http.StatusOK, Context)
 }
+
+func HtmlResponse(c *gin.Context, errCode int) {
+	c.JSON(http.StatusOK, gin.H{
+		"code": errCode,
+		"msg":  error.GetMsg(errCode),
+	})
+}

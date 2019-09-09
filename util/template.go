@@ -14,6 +14,12 @@ func unescaped(s string) interface{} {
 	return template.HTML(s)
 }
 
+func IntToTime(t int) string {
+	timeTime := time.Unix(int64(t), 0)
+
+	return timeTime.Format("2006/01/02 15:04:05")
+}
+
 //时间转换
 func StrTime(t int64) string {
 	var byTime = []int64{365 * 24 * 60 * 60, 24 * 60 * 60, 60 * 60, 60, 1}

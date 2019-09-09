@@ -6,7 +6,9 @@ import (
 	"GinApi/middleware/logger"
 	"GinApi/middleware/session"
 	"GinApi/package/error"
+	"GinApi/util"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"net/http"
 )
 
@@ -31,13 +33,14 @@ func InitRouter(e *gin.Engine) {
 	gin.SetMode(config.ServerSetting.RunMode)
 
 	// 模板函数
-	//e.SetFuncMap(template.FuncMap{
-	//	"unescaped":   util.unescaped,
-	//	"strtime":     util.StrTime,
-	//	"plus1":       util.selfPlus,
-	//	"numplusplus": util.numPlusPlus,
-	//	"strip":       util.Long2IPString,
-	//})
+	e.SetFuncMap(template.FuncMap{
+		"IntToTime": util.IntToTime,
+		//	"unescaped":   util.unescaped,
+		//	"strtime":     util.StrTime,
+		//	"plus1":       util.selfPlus,
+		//	"numplusplus": util.numPlusPlus,
+		//	"strip":       util.Long2IPString,
+	})
 
 	e.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{

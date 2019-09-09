@@ -16,6 +16,11 @@ var MsgFlags = map[int]string{
 	ERROR_EXIST_USER:     "用户已经存在了",
 	ERROR_NOT_EXIST_USER: "用户名或密码错误",
 	ERROR_DISABLE_USER:   "用户已被禁止，请联系管理员",
+	ERROR_PASSWORD_USER:  "密码加密失败",
+
+	ERROR_SQL_INSERT_FAIL: "数据插入失败",
+	ERROR_SQL_DELETE_FAIL: "数据删除失败",
+	ERROR_SQL_UPDATE_FAIL: "数据修改失败",
 }
 
 //获取信息码

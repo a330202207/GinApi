@@ -40,6 +40,12 @@ func Database() {
 	}
 
 	db.SingularTable(true)
+	db.LogMode(true)
+
+	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
+	db.Callback().Update().Replace("gorm:update_time_stamp", updateTimeStampForUpdateCallback)
+	db.Callback().Delete().Replace("gorm:delete", deleteCallback)
+
 	db.DB().SetMaxIdleConns(50)
 	db.DB().SetMaxOpenConns(100)
 	db.DB().SetConnMaxLifetime(time.Second * 30)

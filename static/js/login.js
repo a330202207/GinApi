@@ -37,7 +37,7 @@ var Login = function () {
                     password: password
                 },
                 success: function (res) {
-                    console.log(res);
+                    console.log(res);return false
                     if (res.code == 200) {
                         token = res.data.token;
                         sessionStorage.setItem("token", token);

@@ -17,17 +17,17 @@ func AdminLoginIndex(c *gin.Context) {
 
 //登陆
 func AdminLogin(c *gin.Context) {
-	var service service.AdminLoginService
+	var service service.AdminLoginInfo
 	if err := c.ShouldBind(&service); err == nil {
-		if user, errCode := service.Login(); errCode != 200 {
+		if admin, errCode := service.Login(); errCode != 200 {
 			util.JsonErrResponse(c, errCode)
 		} else {
 			//登陆成功
 			s := sessions.Default(c)
 			s.Clear()
-			s.Set("user_id", user.ID)
+			s.Set("user_id", admin.ID)
 			s.Save()
-			util.JsonSuccessResponse(c, errCode, map[string]int{"user_id": user.ID})
+			util.JsonSuccessResponse(c, errCode, map[string]int{"user_id": admin.ID})
 		}
 	} else {
 		util.JsonErrResponse(c, error.ERROR_NOT_EXIST_USER)

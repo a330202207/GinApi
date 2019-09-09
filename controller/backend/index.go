@@ -5,11 +5,12 @@ import (
 	"net/http"
 )
 
+//首页
 func Index(c *gin.Context) {
 	//sessions := models.GetSessions(c)
 
 	title := "Hello Admin!"
-	c.HTML(http.StatusOK, "admin_index.html", gin.H{
+	c.HTML(http.StatusOK, "backend_index.html", gin.H{
 		"title": title,
 	})
 }
