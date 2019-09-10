@@ -13,6 +13,10 @@ type Model struct {
 	DeletedAt int `json:"deleted_at"`
 }
 
+var Limit int
+
+var Offset int
+
 // updateTimeStampForCreateCallback will set `CreatedOn`, `ModifiedOn` when creating
 func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	if !scope.HasError() {

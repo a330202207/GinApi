@@ -3,7 +3,6 @@ package routes
 import (
 	"GinApi/config"
 	"GinApi/middleware/cors"
-	"GinApi/middleware/logger"
 	"GinApi/middleware/session"
 	"GinApi/package/error"
 	"GinApi/util"
@@ -24,7 +23,7 @@ func InitRouter(e *gin.Engine) {
 	e.Use(gin.Recovery())
 
 	// 使用日志中间件
-	e.Use(logger.LoggerToFile())
+	//e.Use(logger.LoggerToFile())
 
 	//跨域
 	e.Use(cors.Cors())

@@ -37,11 +37,11 @@ var Login = function () {
                     password: password
                 },
                 success: function (res) {
-                    console.log(res);return false
+                    console.log(res);
                     if (res.code == 200) {
                         token = res.data.token;
                         sessionStorage.setItem("token", token);
-                        window.location.href = '/admin/index.html';
+                        window.location.href = '/admin/backend_index.html';
                     } else {
                         layer.msg(res.msg, {icon: 2});
                         setTimeout(function () {

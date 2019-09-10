@@ -92,6 +92,7 @@ func SetPassword(password string) (string, bool) {
 	return string(hash), true
 }
 
+//删除管理员
 func (admin *AdminInfo) AdminDel() int {
 	userName := map[string]interface{}{"id": admin.ID, "status": 1}
 	isExist := model.ExistAdmin(userName)
@@ -102,6 +103,28 @@ func (admin *AdminInfo) AdminDel() int {
 	err := model.DelAdmin(map[string]interface{}{"id": admin.ID})
 	if err != nil {
 		return error.ERROR_SQL_DELETE_FAIL
+	}
+	return error.SUCCESS
+}
+
+//编辑管理员
+func (admin *AdminInfo) AdminEdit() (model.Admin, int) {
+	adminInfo, err := model.GetAdmin(map[string]interface{}{"id": admin.ID})
+	if err != nil {
+		return adminInfo, error.ERROR
+	}
+	return adminInfo, error.SUCCESS
+}
+
+//保存管理员
+func (adminInfo *AdminInfo) AdminSave() int {
+	id := adminInfo.ID
+	admin := model.Admin{
+		UserName: adminInfo.UserName,
+		Status:   adminInfo.Status,
+	}
+	if err := model.SaveAdmin(id, admin); err != nil {
+		return error.ERROR_SQL_UPDATE_FAIL
 	}
 	return error.SUCCESS
 }

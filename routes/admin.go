@@ -15,6 +15,9 @@ func RegisterBackendRouter(e *gin.Engine) {
 		//登录
 		admin.POST("/login", backend.AdminLogin)
 
+		//登出
+		admin.GET("/logout", backend.AdminLogOut)
+
 		//首页
 		admin.GET("/backend_index.html", backend.Index)
 

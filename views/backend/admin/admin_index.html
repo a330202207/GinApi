@@ -36,18 +36,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="sample_1_wrapper" class="dataTables_wrapper no-footer">
-                            <form action="/admin/admin_index.html" method="get">
+                        <div  class="dataTables_wrapper no-footer">
+                            <form action="/admin/admin_index.html" method="get" id="search">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-1">
                                         <div id="sample_1_filter" class="dataTables_filter">
-                                            <input name="username" value="" placeholder="请输入管理员名称"
+                                            <input name="keyword" value="{{.username}}" placeholder="请输入管理员名称"
                                                    class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-2 col-sm-0">
                                         <div class="margin-bottom-5">
-                                            <button class="btn btn-sm btn blue filter-submit margin-bottom">
+                                            <button type="button" id="search-button" class="btn btn-sm btn blue filter-submit margin-bottom">
                                                 <i class="fa fa-search"></i> 搜索
                                             </button>
                                         </div>
@@ -60,12 +60,12 @@
                                         <tr role="row" class="heading">
                                             <th width="5%"> ID</th>
                                             <th width="15%"> 管理员名称</th>
-                                            <th width="10%"> 状态</th>
+                                            <th width="5%"> 状态</th>
                                             <th width="10%"> 创建时间</th>
-                                            <th width="10%"> 创建IP</th>
+                                            <th width="5%"> 创建IP</th>
                                             <th width="10%"> 修改时间</th>
-                                            <th width="10%"> 最后登录IP</th>
-                                            <th width="10%"> 登录次数</th>
+                                            <th width="5%"> 最后登录IP</th>
+                                            <th width="5%"> 登录次数</th>
                                             <th width="10%"> 最后登录时间</th>
                                             <th width="10%"> 操作</th>
                                         </tr>
@@ -90,7 +90,7 @@
                                             <td>{{.LoginsCnt}}</td>
                                             <td>{{.LoginDate.Format "2006/01/02  15:04:05"}}</td>
                                             <td>
-                                                <a href="/admin/admin_edit.html?&id={{.ID}}"
+                                                <a href="/admin/admin_edit.html?id={{.ID}}"
                                                    class="btn btn-circle btn-icon-only red" title="编辑">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -109,14 +109,20 @@
                                     </table>
                                 </div>
                                 <div class="row">
-
-
-                                    <div class="col-md-7 col-sm-7">
-                                        <div class="dataTables_paginate paging_bootstrap_full_number"
-                                             id="sample_1_paginate">
+                                    <div class="col-md-5 col-sm-5">
+                                        <div class="dataTables_info" id="sample_1_info" role="status"
+                                             aria-live="polite">
+                                            总条数：{{.count}}
                                         </div>
                                     </div>
-
+                                    {{if gt .totalPage 1}}
+                                        <div class="col-md-7 col-sm-7">
+                                            <div class="dataTables_paginate paging_bootstrap_full_number"
+                                                 id="sample_1_paginate">
+                                                {{.pages}}
+                                            </div>
+                                        </div>
+                                    {{end}}
                                 </div>
                             </form>
                         </div>

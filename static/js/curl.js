@@ -1,13 +1,15 @@
 var form = function () {
 
     var form = $("#form");
-    var sumit = $("#submit");
+    var summit = $("#submit");
 
     var url = form.attr("action");
     var saveData = function () {
-        sumit.click(function () {
+        summit.click(function () {
             var postData = form.serialize();
-            sumit.button("loading");
+            summit.button("loading");
+            console.log(url);
+            console.log(postData);
             ajax(url, postData)
         });
     }
@@ -35,6 +37,17 @@ var form = function () {
         });
     }
 
+    var search = function () {
+        var search_summit = $("#search-button");
+        var search_form = $("#search");
+        var url = search_form.attr("action");
+
+        search_summit.click(function () {
+            var key = search_form.find('input[name="keyword"]').val();
+            location.href = "/admin/admin_index.html?keyword=" + key;
+        })
+    }
+
     var ajax = function (url, postData) {
         $.ajax({
             url: url,
@@ -45,25 +58,50 @@ var form = function () {
                 if (res.code == 200) {
                     layer.msg(res.msg, {icon: 1})
                     setTimeout(function () {
-                        sumit.button('reset');
+                        summit.button('reset');
                         location.reload()
                     }, 2000);
                 } else {
                     layer.msg(res.msg, {icon: 2});
                     setTimeout(function () {
-                        sumit.button('reset');
+                        summit.button('reset');
                     }, 2000);
                 }
             }
         });
     }
 
-
+    var handleLogout = function () {
+        $("#logout").click(function () {
+            var url = $("#logout").attr("data-url");
+            $.ajax({
+                url: url,
+                type: "get",
+                success: function (res) {
+                    console.log(res);
+                    if (res.code == 200) {
+                        layer.msg(res.msg, {icon: 1});
+                        setTimeout(function () {
+                            window.location.href = '/admin/login.html';
+                        }, 2000);
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                        setTimeout(function () {
+                            location.reload()
+                        }, 2000);
+                        return false;
+                    }
+                }
+            })
+        })
+    }
 
     return {
         init: function () {
             saveData();
             delData();
+            search();
+            handleLogout();
         }
     }
 }();

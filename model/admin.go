@@ -33,8 +33,9 @@ func ExistAdmin(maps interface{}) bool {
 }
 
 //获取管理员列表
-func GetAdminList(num int, order string, maps interface{}) (list []Admin, err error) {
-	err = DB.Unscoped().Where(maps).Order(order).Limit(num).Find(&list).Error
+func GetAdminList(Limit, Offset int, order string, query interface{}, args ...interface{}) (list []Admin, count int, err error) {
+	err = DB.Unscoped().Where(query, args...).Order(order).Limit(Limit).Offset(Offset).Find(&list).Error
+	DB.Unscoped().Model(&Admin{}).Where(query, args...).Count(&count)
 	return
 }
 
@@ -50,6 +51,7 @@ func DelAdmin(maps interface{}) (err error) {
 	return
 }
 
-//func SaveAdmin(adminInfo *Admin) {
-//
-//}
+func SaveAdmin(id int, admin Admin) (err error) {
+	err = DB.Model(&admin).Where("id = ?", id).Updates(admin).Error
+	return
+}

@@ -6,6 +6,7 @@ import (
 	"GinApi/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 //后台登陆页
@@ -32,4 +33,15 @@ func AdminLogin(c *gin.Context) {
 	} else {
 		util.JsonErrResponse(c, error.ERROR_NOT_EXIST_USER)
 	}
+}
+
+//登出
+func AdminLogOut(c *gin.Context) {
+	s := sessions.Default(c)
+	s.Clear()
+	s.Save()
+	c.JSON(http.StatusOK, gin.H{
+		"code": error.SUCCESS,
+		"msg":  error.GetMsg(error.SUCCESS),
+	})
 }

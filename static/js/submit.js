@@ -26,7 +26,7 @@ var Submit = function () {
 
     return {
         init: function () {
-            handleSubmit();
+            // handleSubmit();
         }
     };
 
