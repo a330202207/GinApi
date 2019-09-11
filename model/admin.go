@@ -51,6 +51,7 @@ func DelAdmin(maps interface{}) (err error) {
 	return
 }
 
+//保存管理员
 func SaveAdmin(id int, admin Admin) (err error) {
 	err = DB.Model(&admin).Where("id = ?", id).Updates(admin).Error
 	return

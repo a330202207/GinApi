@@ -44,7 +44,7 @@ var form = function () {
 
         search_summit.click(function () {
             var key = search_form.find('input[name="keyword"]').val();
-            location.href = "/admin/admin_index.html?keyword=" + key;
+            location.href = url + "?keyword=" + key;
         })
     }
 
