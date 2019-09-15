@@ -27,11 +27,12 @@ func GetAdminList(c *gin.Context) {
 	Offset := (page - 1) * pageSize
 
 	if name != "" {
-		data["user_name like"] = "%" + name
+		data["user_name like"] = name + "%"
 	}
 
 	query, args, _ := util.WhereBuild(data)
 	admins, count, _ := model.GetAdminList(pageSize, Offset, "created_at desc", query, args...)
+
 	totalPage := int(math.Ceil(float64(count) / float64(pageSize)))
 	pagination := util.NewPagination(c.Request, count, pageSize)
 
@@ -47,16 +48,18 @@ func GetAdminList(c *gin.Context) {
 
 //添加管理员页
 func AdminCreate(c *gin.Context) {
+	roles, _ := model.GetAllRoles()
+
 	c.HTML(http.StatusOK, "admin_create.html", gin.H{
 		"action": "add",
+		"roles":  roles,
 	})
 }
 
 //添加管理员
 func AdminAdd(c *gin.Context) {
-	var admin service.AdminInfo
-	admin.CreateIp = c.ClientIP()
-
+	var admin service.Admin
+	admin.AdminInfo.CreateIp = c.ClientIP()
 	if err := c.ShouldBind(&admin); err == nil {
 		resCode := admin.AdminAdd()
 		util.HtmlResponse(c, resCode)
@@ -67,11 +70,11 @@ func AdminAdd(c *gin.Context) {
 
 //删除管理员
 func AdminDel(c *gin.Context) {
-	var admin service.AdminInfo
+	var adminInfo service.AdminInfo
 	id, err := strconv.Atoi(c.PostForm("id"))
-	admin.ID = id
+	adminInfo.ID = id
 	if id != 0 || err != nil {
-		resCode := admin.AdminDel()
+		resCode := adminInfo.AdminDel()
 		util.HtmlResponse(c, resCode)
 	} else {
 		util.JsonErrResponse(c, error.INVALID_PARAMS)
@@ -80,18 +83,24 @@ func AdminDel(c *gin.Context) {
 
 //编辑管理员页
 func AdminEdit(c *gin.Context) {
-	var admin service.AdminInfo
+	var account service.Account
 	id, err := strconv.Atoi(c.Query("id"))
-	admin.ID = id
+	account.AdminInfo.ID = id
+
+	roles, _ := model.GetAllRoles()
+
+	myRoles, _ := model.GetAdminRoles(id)
+
 	if id != 0 || err != nil {
-		if info, errCode := admin.AdminEdit(); errCode != 200 {
+		if info, errCode := account.AdminEdit(); errCode != 200 {
 			util.JsonErrResponse(c, errCode)
 		} else {
-			//登陆成功
 			c.HTML(http.StatusOK, "admin_edit.html", gin.H{
-				"action": "edit",
-				"title":  "编辑",
-				"info":   info,
+				"action":  "edit",
+				"title":   "编辑",
+				"info":    info,
+				"roles":   roles,
+				"myRoles": myRoles,
 			})
 		}
 	} else {
@@ -102,7 +111,7 @@ func AdminEdit(c *gin.Context) {
 
 //保存管理员
 func AdminSave(c *gin.Context) {
-	var admin service.AdminInfo
+	var admin service.Account
 	if err := c.ShouldBind(&admin); err == nil {
 		resCode := admin.AdminSave()
 		util.HtmlResponse(c, resCode)

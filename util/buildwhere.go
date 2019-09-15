@@ -86,3 +86,10 @@ func WhereBuild(where map[string]interface{}) (whereSQL string, vals []interface
 	}
 	return
 }
+
+//批量插入
+func BatchInsert(tableName, key, val string) (str string) {
+
+	str = fmt.Sprintf("INSERT INTO `%s` (%s) values %s ", tableName, key, val)
+	return
+}

@@ -43,9 +43,28 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3 control-label" for="form_control_1">角色</label>
+                                <div class="col-md-9">
+                                    <div class="md-checkbox-inline">
+                                        {{$myResources := .myResources }}
+                                        {{range $i, $v := .resources}}
+                                            {{$id := $v.ID}}
+                                            <div class="md-checkbox">
+                                                <input type="checkbox" name="resource_ids" value="{{$v.ID}}"
+                                                       id="checkbox1_{{$i}}"
+                                                       class="md-check" {{range $myResources}} {{if eq .ResourceID $id}}checked{{end}}{{end}}>
+                                                <label for="checkbox1_{{$i}}">
+                                                    <span class="inc"></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span> {{$v.Name}} </label>
+                                            </div>
+                                        {{end}}
+                                    </div>
+                            <div class="form-group">
                                 <label class="col-md-3 control-label" for="title"></label>
                                 <div class="col-md-5">
-                                    <button type="button" id="submit" class="btn green btn-circle" data-loading-text="正在提交...">
+                                    <button type="button" id="submit" class="btn green btn-circle"
+                                            data-loading-text="正在提交...">
                                         保存
                                     </button>
                                 </div>

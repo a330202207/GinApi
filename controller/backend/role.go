@@ -46,22 +46,22 @@ func GetRoleList(c *gin.Context) {
 
 //添加角色页
 func RoleCreate(c *gin.Context) {
+	resources, _ := model.GetResources(map[string]interface{}{})
 	c.HTML(http.StatusOK, "role_create.html", gin.H{
-		"action": "add",
+		"action":    "add",
+		"resources": resources,
 	})
 }
 
 //添加角色
 func RoleAdd(c *gin.Context) {
-	var role service.RoleInfo
-	fmt.Println(role)
+	var role service.RoleResource
 	if err := c.ShouldBind(&role); err == nil {
 		resCode := role.RoleAdd()
 		util.HtmlResponse(c, resCode)
 	} else {
 		util.JsonErrResponse(c, error.INVALID_PARAMS)
 	}
-
 }
 
 //删除角色
@@ -79,18 +79,23 @@ func RoleDel(c *gin.Context) {
 
 //编辑角色页
 func RoleEdit(c *gin.Context) {
-	var role service.RoleInfo
+	var role service.RoleResource
 	id, err := strconv.Atoi(c.Query("id"))
 	role.ID = id
+
+	resources, _ := model.GetResources(map[string]interface{}{})
+	myResources, _ := model.GetRoleResources(id)
+
 	if id != 0 || err != nil {
 		if info, errCode := role.RoleEdit(); errCode != 200 {
 			util.JsonErrResponse(c, errCode)
 		} else {
-			//登陆成功
 			c.HTML(http.StatusOK, "role_edit.html", gin.H{
-				"action": "edit",
-				"title":  "编辑",
-				"info":   info,
+				"action":      "edit",
+				"title":       "编辑",
+				"info":        info,
+				"resources":   resources,
+				"myResources": myResources,
 			})
 		}
 	} else {
@@ -100,11 +105,12 @@ func RoleEdit(c *gin.Context) {
 
 //保存角色
 func RoleSave(c *gin.Context) {
-	var role service.RoleInfo
+	var role service.RoleResource
 	if err := c.ShouldBind(&role); err == nil {
 		resCode := role.RoleSave()
 		util.HtmlResponse(c, resCode)
 	} else {
+		fmt.Println(err)
 		util.JsonErrResponse(c, error.INVALID_PARAMS)
 	}
 }

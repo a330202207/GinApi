@@ -10,8 +10,13 @@ type RoleInfo struct {
 	Name string `form:"name" json:"name" binding:"required"`
 }
 
+type RoleResource struct {
+	RoleInfo
+	ResourceIDs []string `form:"resource_ids" json:"resource_ids" binding:"required"`
+}
+
 //添加角色
-func (roleInfo *RoleInfo) RoleAdd() int {
+func (roleInfo *RoleResource) RoleAdd() int {
 	name := map[string]interface{}{"name": roleInfo.Name, "status": 1}
 	isExist := model.ExistRole(name)
 
@@ -23,16 +28,22 @@ func (roleInfo *RoleInfo) RoleAdd() int {
 		Status: 1,
 	}
 
-	if err := model.AddRole(&role); err != nil {
+	roleID, err := model.AddRole(&role)
+	if err != nil {
 		return error.ERROR_SQL_INSERT_FAIL
 	}
+
+	if model.AddRoleResource(roleID, roleInfo.ResourceIDs) != nil {
+		return error.ERROR_SQL_INSERT_FAIL
+	}
+
 	return error.SUCCESS
 }
 
 //删除角色
 func (role *RoleInfo) RoleDel() int {
-	userName := map[string]interface{}{"id": role.ID, "status": 1}
-	isExist := model.ExistRole(userName)
+	name := map[string]interface{}{"id": role.ID, "status": 1}
+	isExist := model.ExistRole(name)
 	if isExist == false {
 		return error.ERROR_NOT_EXIST_USER
 	}
@@ -41,6 +52,11 @@ func (role *RoleInfo) RoleDel() int {
 	if err != nil {
 		return error.ERROR_SQL_DELETE_FAIL
 	}
+
+	if model.DelRoleResource(role.ID) != nil {
+		return error.ERROR_SQL_DELETE_FAIL
+	}
+
 	return error.SUCCESS
 }
 
@@ -54,7 +70,7 @@ func (role *RoleInfo) RoleEdit() (model.Role, int) {
 }
 
 //保存角色
-func (roleInfo *RoleInfo) RoleSave() int {
+func (roleInfo *RoleResource) RoleSave() int {
 	id := roleInfo.ID
 	role := model.Role{
 		Name: roleInfo.Name,
@@ -62,5 +78,14 @@ func (roleInfo *RoleInfo) RoleSave() int {
 	if err := model.SaveRole(id, role); err != nil {
 		return error.ERROR_SQL_UPDATE_FAIL
 	}
+
+	if model.DelRoleResource(roleInfo.RoleInfo.ID) != nil {
+		return error.ERROR_SQL_INSERT_FAIL
+	}
+
+	if model.AddRoleResource(roleInfo.RoleInfo.ID, roleInfo.ResourceIDs) != nil {
+		return error.ERROR_SQL_INSERT_FAIL
+	}
+
 	return error.SUCCESS
 }

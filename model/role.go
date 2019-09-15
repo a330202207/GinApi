@@ -30,9 +30,16 @@ func GetRoleList(Limit, Offset int, order string, query interface{}, args ...int
 	return
 }
 
+//获取全部角色
+func GetAllRoles() (roles []Role, err error) {
+	err = DB.Unscoped().Where("status = ?", 1).Find(&roles).Error
+	return
+}
+
 //添加角色
-func AddRole(role *Role) (err error) {
+func AddRole(role *Role) (id int, err error) {
 	err = DB.Create(role).Error
+	id = role.ID
 	return
 }
 

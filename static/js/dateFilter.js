@@ -24,7 +24,7 @@ var dateFilter = function () {
             $("#end_time").datepicker('hide');
         });
 
-        if (startTime !=  null || endTime != null) {
+        if (startTime != null || endTime != null) {
             $('#start_time').datepicker('setDate', startTime);
             $('#end_time').datepicker('setDate', endTime);
         }

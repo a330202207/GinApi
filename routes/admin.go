@@ -60,22 +60,22 @@ func RegisterBackendRouter(e *gin.Engine) {
 		//保存角色
 		admin.POST("/role/save", backend.RoleSave)
 
-		//路由列表
-		admin.GET("/router_index.html", backend.GetRouterList)
+		//资源列表页
+		admin.GET("/resource/resource_index.html", backend.GetResourceList)
 
-		//添加路由
-		admin.GET("/router/router_create.html", backend.RouterCreate)
+		//添加资源页
+		admin.GET("/resource/resource_create.html", backend.ResourceCreate)
 
-		//添加路由
-		admin.POST("/router/add", backend.RouterAdd)
+		//添加资源
+		admin.POST("/resource/add", backend.ResourceAdd)
 
-		//删除路由
-		admin.POST("/router/del", backend.RouterDel)
+		//删除资源
+		admin.POST("/resource/del", backend.ResourceDel)
 
-		//编辑路由
-		admin.GET("/router/router_edit.html", backend.RouterEdit)
+		//编辑资源页
+		admin.GET("/resource/resource_edit.html", backend.ResourceEdit)
 
-		//保存路由
-		admin.POST("/router/save", backend.RouterSave)
+		//保存资源
+		admin.POST("/resource/save", backend.ResourceSave)
 	}
 }

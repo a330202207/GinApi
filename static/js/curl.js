@@ -15,16 +15,16 @@ var form = function () {
     }
 
     var delData = function () {
-        $("#table td").on("click", ".del", function() {
+        $("#table td").on("click", ".del", function () {
             var _self = $(this);
             var url = _self.attr("url");
             var id = _self.attr("data-id");
             $.ajax({
-                url : url,
-                type : "post",
-                data:{"id":id},
-                dataType : "json",
-                success : function(res) {
+                url: url,
+                type: "post",
+                data: {"id": id},
+                dataType: "json",
+                success: function (res) {
                     if (res.code == 200) {
                         layer.msg(res.msg, {icon: 1});
                         _self.parent('td').parent('tr').remove();

@@ -18,7 +18,7 @@ func AdminLoginIndex(c *gin.Context) {
 
 //登陆
 func AdminLogin(c *gin.Context) {
-	var service service.AdminLoginInfo
+	var service service.AccountInfo
 	if err := c.ShouldBind(&service); err == nil {
 		if admin, errCode := service.Login(); errCode != 200 {
 			util.JsonErrResponse(c, errCode)

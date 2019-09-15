@@ -4,11 +4,11 @@ var Submit = function () {
             var form = $('form').serialize();
             var url = $("#save").attr('url');
             $.ajax({
-                url : url,
-                type : "post",
-                dataType : "json",
+                url: url,
+                type: "post",
+                dataType: "json",
                 data: form,
-                success : function(res) {
+                success: function (res) {
                     if (res.status == 0) {
                         layer.msg(res.msg, {icon: 1});
                         setTimeout(function () {

@@ -6,21 +6,46 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type AdminLoginInfo struct {
-	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
+type Admin struct {
+	AccountInfo
+	AdminInfo
+}
+
+type AccountInfo struct {
+	UserName
+	Password
+}
+
+type Account struct {
+	UserName
+	AdminInfo
+}
+
+type Password struct {
 	Password string `form:"password" json:"password" binding:"required,min=6,max=40"`
 }
 
+type UserName struct {
+	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
+}
+
+type AdminInfo struct {
+	ID       int      `form:"id" json:"id"`
+	CreateIp string   `json:"login_ip"`
+	RoleIDs  []string `form:"role_ids" json:"role_ids" binding:"required"`
+	Status   int      `form:"status" json:"status" binding:"required"`
+}
+
 //登陆
-func (loginInfo *AdminLoginInfo) Login() (model.Admin, int) {
-	userName := map[string]interface{}{"user_name": loginInfo.UserName}
+func (account *AccountInfo) Login() (model.Admin, int) {
+	userName := map[string]interface{}{"user_name": account.UserName}
 	admin, err := model.GetAdmin(userName)
 	if err != nil {
 		return admin, error.ERROR_NOT_EXIST_USER
 	}
 
 	//密码不对
-	if CheckPassword(admin.Password, loginInfo.Password) == false {
+	if CheckPassword(admin.Password, account.Password.Password) == false {
 		return admin, error.ERROR_NOT_EXIST_USER
 	}
 
@@ -49,37 +74,36 @@ func CheckStatus(status int) bool {
 	return true
 }
 
-type AdminInfo struct {
-	ID       int    `form:"id" json:"id"`
-	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
-	Password string `form:"password" json:"password" binding:"required,min=6,max=40"`
-	CreateIp string `json:"login_ip"`
-	Status   int    `form:"status" json:"status" binding:"required"`
-}
-
 //添加用户
-func (adminInfo *AdminInfo) AdminAdd() int {
+func (admin *Admin) AdminAdd() int {
 
-	userName := map[string]interface{}{"user_name": adminInfo.UserName, "status": 1}
+	userName := map[string]interface{}{"user_name": admin.UserName.UserName, "status": 1}
 	isExist := model.ExistAdmin(userName)
 
 	if isExist == true {
 		return error.ERROR_EXIST_USER
 	}
 
-	hashPassword, err := SetPassword(adminInfo.Password)
-	if err == false {
+	hashPassword, ok := SetPassword(admin.Password.Password)
+	if ok == false {
 		return error.ERROR_PASSWORD_USER
 	}
-	admin := model.Admin{
-		UserName: adminInfo.UserName,
-		CreateIp: adminInfo.CreateIp,
+
+	adminInfo := model.Admin{
+		UserName: admin.UserName.UserName,
+		CreateIp: admin.CreateIp,
 		Password: hashPassword,
 	}
 
-	if err := model.AddAdmin(&admin); err != nil {
+	adminId, err := model.AddAdmin(&adminInfo)
+	if err != nil {
 		return error.ERROR_SQL_INSERT_FAIL
 	}
+
+	if model.AddAdminRole(adminId, admin.AdminInfo.RoleIDs) != nil {
+		return error.ERROR_SQL_INSERT_FAIL
+	}
+
 	return error.SUCCESS
 }
 
@@ -104,12 +128,17 @@ func (admin *AdminInfo) AdminDel() int {
 	if err != nil {
 		return error.ERROR_SQL_DELETE_FAIL
 	}
+
+	if err := model.DelAdminRole(admin.ID); err != nil {
+		return error.ERROR_SQL_DELETE_FAIL
+	}
+
 	return error.SUCCESS
 }
 
 //编辑管理员
-func (admin *AdminInfo) AdminEdit() (model.Admin, int) {
-	adminInfo, err := model.GetAdmin(map[string]interface{}{"id": admin.ID})
+func (account *Account) AdminEdit() (model.Admin, int) {
+	adminInfo, err := model.GetAdmin(map[string]interface{}{"id": account.AdminInfo.ID})
 	if err != nil {
 		return adminInfo, error.ERROR
 	}
@@ -117,14 +146,23 @@ func (admin *AdminInfo) AdminEdit() (model.Admin, int) {
 }
 
 //保存管理员
-func (adminInfo *AdminInfo) AdminSave() int {
-	id := adminInfo.ID
+func (account *Account) AdminSave() int {
+	id := account.ID
 	admin := model.Admin{
-		UserName: adminInfo.UserName,
-		Status:   adminInfo.Status,
+		UserName: account.UserName.UserName,
+		Status:   account.AdminInfo.Status,
 	}
 	if err := model.SaveAdmin(id, admin); err != nil {
 		return error.ERROR_SQL_UPDATE_FAIL
 	}
+
+	if err := model.DelAdminRole(id); err != nil {
+		return error.ERROR_SQL_UPDATE_FAIL
+	}
+
+	if err := model.AddAdminRole(id, account.AdminInfo.RoleIDs); err != nil {
+		return error.ERROR_SQL_UPDATE_FAIL
+	}
+
 	return error.SUCCESS
 }

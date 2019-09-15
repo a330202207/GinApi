@@ -7,11 +7,11 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="/admin/admin/backend_index.html">首页</a>
+                    <a href="/admin/resource/resource_index.html">首页</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="/admin/admin/admin_index.html">管理员列表</a>
+                    <a href="/admin/resource/resource_index.html">资源列表</a>
                     <i class="fa fa-circle"></i>
                 </li>
             </ul>
@@ -23,25 +23,25 @@
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            管理员列表
+                            资源列表
                         </div>
                     </div>
                     <div class="portlet-body">
                         <div class="table-toolbar">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="/admin/admin/admin_create.html" class="btn btn-circle green"> 添加管理员
+                                    <a href="/admin/resource/resource_create.html" class="btn btn-circle green"> 添加资源
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="dataTables_wrapper no-footer">
-                            <form action="/admin/admin/admin_index.html" method="get" id="search">
+                            <form action="/admin/resource/resource_index.html" method="get" id="search">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-1">
                                         <div id="sample_1_filter" class="dataTables_filter">
-                                            <input name="keyword" value="{{.username}}" placeholder="请输入管理员名称"
+                                            <input name="keyword" value="{{.name}}" placeholder="请输入名称"
                                                    class="form-control input-sm">
                                         </div>
                                     </div>
@@ -60,46 +60,30 @@
                                         <thead>
                                         <tr role="row" class="heading">
                                             <th width="5%"> ID</th>
-                                            <th width="15%"> 管理员名称</th>
-                                            <th width="5%"> 状态</th>
-                                            <th width="10%"> 创建时间</th>
-                                            <th width="5%"> 创建IP</th>
-                                            <th width="10%"> 修改时间</th>
-                                            <th width="5%"> 最后登录IP</th>
-                                            <th width="5%"> 登录次数</th>
-                                            <th width="10%"> 最后登录时间</th>
+                                            <th width="5%"> 上级菜单</th>
+                                            <th width="5%"> 名称</th>
+                                            <th width="15%"> 路由</th>
                                             <th width="10%"> 操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
-                                        {{range .admins}}
-                                            <tr role="row" class="odd">
+                                        {{range .resources}}
+                                            <tr role="row" class="{{if eq .PID 0 }} success {{else}} odd {{end}}">
                                                 <td class="sorting_1">{{.ID}}</td>
-                                                <td>{{.UserName}}</td>
                                                 <td>
-                                                    {{if eq .Status 1}}
-                                                        <span class="label label-sm label-danger">启用</span>
-                                                    {{else}}
-                                                        <span class="label label-sm label-info">禁用</span>
+                                                    {{if gt .PID 0}}
+                                                        {{.PID}}
                                                     {{end}}
                                                 </td>
-                                                <td>{{.CreatedAt | IntToTime}}</td>
-                                                <td>{{.CreateIp}}</td>
-                                                <td>{{.UpdatedAt | IntToTime}}</td>
-                                                <td>{{.LoginIp}}</td>
-                                                <td>{{.LoginsCnt}}</td>
-                                                <td>{{.LoginDate.Format "2006/01/02  15:04:05"}}</td>
+                                                <td>{{.Name}}</td>
+                                                <td>{{.ResourceRouter}}</td>
                                                 <td>
-                                                    <a href="/admin/admin/admin_edit.html?id={{.ID}}"
+                                                    <a href="/admin/resource/resource_edit.html?id={{.ID}}"
                                                        class="btn btn-circle btn-icon-only red" title="编辑">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a href="/admin/admin/edit_password.html?id={{.ID}}"
-                                                       class="btn btn-circle btn-icon-only yellow" title="修改密码">
-                                                        <i class="fa fa-search"></i>
-                                                    </a>
-                                                    <a url="/admin/del" data-id="{{.ID}}"
+                                                    <a url="/admin/resource/del" data-id="{{.ID}}"
                                                        class="btn btn-circle btn-icon-only purple del" title="删除">
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>

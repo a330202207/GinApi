@@ -23,7 +23,7 @@
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            管理员列表
+                            角色列表
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div  class="dataTables_wrapper no-footer">
+                        <div class="dataTables_wrapper no-footer">
                             <form action="/admin/role/role_index.html" method="get" id="search">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-1">
@@ -47,7 +47,8 @@
                                     </div>
                                     <div class="col-md-2 col-sm-0">
                                         <div class="margin-bottom-5">
-                                            <button type="button" id="search-button" class="btn btn-sm btn blue filter-submit margin-bottom">
+                                            <button type="button" id="search-button"
+                                                    class="btn btn-sm btn blue filter-submit margin-bottom">
                                                 <i class="fa fa-search"></i> 搜索
                                             </button>
                                         </div>
@@ -76,10 +77,6 @@
                                                     <a href="/admin/role/role_edit.html?id={{.ID}}"
                                                        class="btn btn-circle btn-icon-only red" title="编辑">
                                                         <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <a href="/admin/role/edit_password.html?id={{.ID}}"
-                                                       class="btn btn-circle btn-icon-only yellow" title="修改密码">
-                                                        <i class="fa fa-search"></i>
                                                     </a>
                                                     <a url="/admin/role/del" data-id="{{.ID}}"
                                                        class="btn btn-circle btn-icon-only purple del" title="删除">

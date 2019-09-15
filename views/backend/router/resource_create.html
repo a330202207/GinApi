@@ -7,15 +7,15 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="/admin/backend_index.html">首页</a>
+                    <a href="/admin/admin/backend_index.html">首页</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="/admin/admin_index.html">管理员列表</a>
+                    <a href="/admin/resource/resource_index.html">资源列表</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span>添加管理员</span>
+                    <span>添加资源</span>
                     <i class="fa fa-circle"></i>
                 </li>
             </ul>
@@ -31,50 +31,44 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <form class="form-horizontal" id="form" action="/admin/add" method="post">
+                        <form class="form-horizontal" id="form" action="/admin/resource/add" method="post">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">
+                                    父级菜单
+                                    <span class="required" aria-required="true">*</span>
+                                </label>
+                                <div class="col-md-4">
+                                    <select class="bs-select form-control" name="p_id">
+                                        <option value="0">顶级菜单</option>
+                                        {{range .resources}}
+                                            <option value="{{.ID}}">{{.Name}}</option>
+                                        {{end}}
+                                    </select>
+                                </div>
+
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title">
-                                    管理员名称
+                                    资源名称
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="user_name" value="">
+                                    <input type="text" class="form-control" name="name" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title">
-                                    密码
-                                    <span class="required" aria-required="true">*</span>
+                                    路由名称
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="password" class="form-control" name="password" value="">
-                                </div>
-                            </div>
-                            <div class="form-group form-md-radios">
-                                <label class="col-md-3 control-label" for="title">是否开启</label>
-                                <div class="col-md-9">
-                                    <div class="md-radio-list">
-                                        <div class="md-radio">
-                                            <input type="radio" id="checkbox1_6" name="status" value="2" class="md-radiobtn">
-                                            <label for="checkbox1_6">
-                                                <span class="inc"></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> 是 </label>
-                                        </div>
-                                        <div class="md-radio">
-                                            <input type="radio" checked id="checkbox1_7" name="status" value="1" class="md-radiobtn">
-                                            <label for="checkbox1_7">
-                                                <span class="inc"></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span> 否 </label>
-                                        </div>
-                                    </div>
+                                    <input type="text" class="form-control" name="resource_router" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title"></label>
                                 <div class="col-md-5">
-                                    <button type="button" id="submit" class="btn green btn-circle" data-loading-text="正在提交...">
+                                    <button type="button" id="submit" class="btn green btn-circle"
+                                            data-loading-text="正在提交...">
                                         保存
                                     </button>
                                 </div>

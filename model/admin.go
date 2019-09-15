@@ -22,6 +22,12 @@ func GetAdmin(maps interface{}) (admin Admin, err error) {
 	return
 }
 
+func (admin *Admin) Check() {
+	if admin.UserName != "" {
+
+	}
+}
+
 //查询管理员是否存在
 func ExistAdmin(maps interface{}) bool {
 	var admin Admin
@@ -40,8 +46,9 @@ func GetAdminList(Limit, Offset int, order string, query interface{}, args ...in
 }
 
 //添加管理员
-func AddAdmin(admin *Admin) (err error) {
+func AddAdmin(admin *Admin) (id int, err error) {
 	err = DB.Create(admin).Error
+	id = admin.ID
 	return
 }
 
