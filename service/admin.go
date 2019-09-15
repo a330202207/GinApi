@@ -38,7 +38,7 @@ type AdminInfo struct {
 
 //登陆
 func (account *AccountInfo) Login() (model.Admin, int) {
-	userName := map[string]interface{}{"user_name": account.UserName}
+	userName := map[string]interface{}{"user_name": account.UserName.UserName}
 	admin, err := model.GetAdmin(userName)
 	if err != nil {
 		return admin, error.ERROR_NOT_EXIST_USER

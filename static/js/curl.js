@@ -82,7 +82,7 @@ var form = function () {
                     if (res.code == 200) {
                         layer.msg(res.msg, {icon: 1});
                         setTimeout(function () {
-                            window.location.href = '/admin/login.html';
+                            window.location.href = '/admin/backend_login.html';
                         }, 2000);
                     } else {
                         layer.msg(res.msg, {icon: 2});

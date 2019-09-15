@@ -22,12 +22,6 @@ func GetAdmin(maps interface{}) (admin Admin, err error) {
 	return
 }
 
-func (admin *Admin) Check() {
-	if admin.UserName != "" {
-
-	}
-}
-
 //查询管理员是否存在
 func ExistAdmin(maps interface{}) bool {
 	var admin Admin
@@ -60,6 +54,11 @@ func DelAdmin(maps interface{}) (err error) {
 
 //保存管理员
 func SaveAdmin(id int, admin Admin) (err error) {
-	err = DB.Model(&admin).Where("id = ?", id).Updates(admin).Error
+	err = DB.Unscoped().Model(&admin).Where("id = ?", id).Updates(admin).Error
+	return
+}
+
+func UpdateLoginInfo(id int, admin Admin) (err error) {
+	err = DB.Unscoped().Model(&admin).Where("id = ?", id).Updates(admin).Error
 	return
 }
