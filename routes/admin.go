@@ -57,11 +57,17 @@ func RegisterBackendRouter(e *gin.Engine) {
 		//编辑角色页面
 		admin.GET("/role/role_edit.html", backend.RoleEdit)
 
+		//获取当前角色资源
+		admin.GET("/role/myResources", backend.MyResources)
+
 		//保存角色
 		admin.POST("/role/save", backend.RoleSave)
 
 		//资源列表页
 		admin.GET("/resource/resource_index.html", backend.GetResourceList)
+
+		//获取资源树结构
+		admin.GET("/resource/resources", backend.GetTreeResources)
 
 		//添加资源页
 		admin.GET("/resource/resource_create.html", backend.ResourceCreate)
@@ -77,5 +83,6 @@ func RegisterBackendRouter(e *gin.Engine) {
 
 		//保存资源
 		admin.POST("/resource/save", backend.ResourceSave)
+
 	}
 }

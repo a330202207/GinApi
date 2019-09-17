@@ -3,6 +3,8 @@ package service
 import (
 	"GinApi/model"
 	"GinApi/package/error"
+	"encoding/json"
+	"fmt"
 )
 
 type Resource struct {
@@ -67,4 +69,16 @@ func (resourceInfo *Resource) ResourceSave() int {
 		return error.ERROR_SQL_UPDATE_FAIL
 	}
 	return error.SUCCESS
+}
+
+//获取资源树
+func GetTreeResources() string {
+	var resource model.Resource
+	list := resource.GetTreeResources(0)
+
+	body, err := json.Marshal(list)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return string(body)
 }

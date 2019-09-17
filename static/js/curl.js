@@ -7,9 +7,17 @@ var form = function () {
     var saveData = function () {
         summit.click(function () {
             var postData = form.serialize();
+            if ($('#tree').length > 0) {
+                var ref = $('#tree').jstree(true);
+
+                var sel = ref.get_selected(false);
+                console.log(sel)
+                $.each(sel, function (index, value) {
+                    postData += "&resource_ids=" + value
+                });
+            }
+            console.log(postData)
             summit.button("loading");
-            console.log(url);
-            console.log(postData);
             ajax(url, postData)
         });
     }

@@ -103,6 +103,13 @@ func RoleEdit(c *gin.Context) {
 	}
 }
 
+func MyResources(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("id"))
+
+	myResources, _ := model.GetRoleResources(id)
+	util.JsonSuccessResponse(c, error.SUCCESS, myResources)
+}
+
 //保存角色
 func RoleSave(c *gin.Context) {
 	var role service.RoleResource

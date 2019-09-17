@@ -105,3 +105,11 @@ func ResourceSave(c *gin.Context) {
 		util.JsonErrResponse(c, error.INVALID_PARAMS)
 	}
 }
+
+//获取资源树
+func GetTreeResources(c *gin.Context) {
+
+	list := service.GetTreeResources()
+
+	util.JsonSuccessResponse(c, error.SUCCESS, list)
+}

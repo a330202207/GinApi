@@ -25,10 +25,13 @@ func InitRouter(e *gin.Engine) {
 	// 使用日志中间件
 	//e.Use(logger.LoggerToFile())
 
-	//跨域
+	// 登陆中间件
+	//e.Use(casbin2.CheckLoginHandle())
+
+	// 跨域
 	e.Use(cors.Cors())
 
-	//设置环境
+	// 设置环境
 	gin.SetMode(config.ServerSetting.RunMode)
 
 	// 模板函数
@@ -41,6 +44,7 @@ func InitRouter(e *gin.Engine) {
 		//	"strip":       util.Long2IPString,
 	})
 
+	//404
 	e.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"code": error.NOROUTE,

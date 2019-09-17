@@ -12,6 +12,7 @@ type RoleResource struct {
 	ResourceID int `gorm:"default:0" json:"resource_id"`
 }
 
+//添加角色-资源
 func AddRoleResource(roleID int, resourceIDs []string) (err error) {
 	str := []string{"role_id", "resource_id"}
 	newArr := [][]string{}
@@ -36,13 +37,13 @@ func AddRoleResource(roleID int, resourceIDs []string) (err error) {
 	return
 }
 
-//获取全部
+//获取全部角色-资源
 func GetRoleResources(roleID int) (list []RoleResource, err error) {
 	err = DB.Unscoped().Where("role_id = ?", roleID).Find(&list).Error
 	return
 }
 
-//删除
+//删除角色-资源
 func DelRoleResource(roleID int) (err error) {
 	err = DB.Model(&AdminRole{}).Where("role_id = ?", roleID).Unscoped().Delete(&RoleResource{}).Error
 	return

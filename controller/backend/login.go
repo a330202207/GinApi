@@ -5,7 +5,6 @@ import (
 	"GinApi/package/error"
 	"GinApi/service"
 	"GinApi/util"
-	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -41,7 +40,6 @@ func AdminLogin(c *gin.Context) {
 	}
 
 	if err := model.UpdateLoginInfo(admin.ID, loginInfo); err != nil {
-		fmt.Println(err)
 		util.JsonErrResponse(c, error.ERROR_SQL_UPDATE_FAIL)
 	}
 

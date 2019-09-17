@@ -32,7 +32,7 @@
                     </div>
                     <div class="portlet-body">
                         <form class="form-horizontal" id="form" action="/admin/role/save" method="post">
-                            <input type="hidden" name="id" value="{{.info.ID}}">
+                            <input type="hidden" id="id" name="id" value="{{.info.ID}}">
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title">
                                     角色名称
@@ -43,23 +43,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="form_control_1">角色</label>
+                                <label class="col-md-3 control-label" for="form_control_1">菜单</label>
                                 <div class="col-md-9">
-                                    <div class="md-checkbox-inline">
-                                        {{$myResources := .myResources }}
-                                        {{range $i, $v := .resources}}
-                                            {{$id := $v.ID}}
-                                            <div class="md-checkbox">
-                                                <input type="checkbox" name="resource_ids" value="{{$v.ID}}"
-                                                       id="checkbox1_{{$i}}"
-                                                       class="md-check" {{range $myResources}} {{if eq .ResourceID $id}}checked{{end}}{{end}}>
-                                                <label for="checkbox1_{{$i}}">
-                                                    <span class="inc"></span>
-                                                    <span class="check"></span>
-                                                    <span class="box"></span> {{$v.Name}} </label>
-                                            </div>
-                                        {{end}}
+                                    <div class="portlet">
+                                        <div class="portlet-body">
+                                            <div id="tree" class="tree-demo"> </div>
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title"></label>
                                 <div class="col-md-5">

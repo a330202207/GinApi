@@ -12,7 +12,7 @@ type AdminRole struct {
 	RoleID  int `gorm:"default:0" json:"role_id"`
 }
 
-//添加
+//添加管理员-角色
 func AddAdminRole(adminId int, roleIds []string) (err error) {
 	str := []string{"admin_id", "role_id"}
 	newArr := [][]string{}
@@ -37,13 +37,13 @@ func AddAdminRole(adminId int, roleIds []string) (err error) {
 	return
 }
 
-//获取全部
+//获取全部管理员-角色
 func GetAdminRoles(adminID int) (roles []AdminRole, err error) {
 	err = DB.Unscoped().Where("admin_id = ?", adminID).Find(&roles).Error
 	return
 }
 
-//删除
+//删除管理员-角色
 func DelAdminRole(adminID int) (err error) {
 	err = DB.Model(&AdminRole{}).Where("admin_id = ?", adminID).Unscoped().Delete(&AdminRole{}).Error
 	return

@@ -58,6 +58,7 @@ func SaveAdmin(id int, admin Admin) (err error) {
 	return
 }
 
+//更新登陆信息
 func UpdateLoginInfo(id int, admin Admin) (err error) {
 	err = DB.Unscoped().Model(&admin).Where("id = ?", id).Updates(admin).Error
 	return

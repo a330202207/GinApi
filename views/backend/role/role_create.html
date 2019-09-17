@@ -23,7 +23,7 @@
         <!-- END PAGE BAR -->
         <div class="row">
             <div class="col-md-12">
-                <div class="portlet light bordered">
+                <div class="portlet">
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-bubble font-green-sharp"></i>
@@ -42,19 +42,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="form_control_1">角色</label>
+                                <label class="col-md-3 control-label" for="form_control_1">菜单</label>
                                 <div class="col-md-9">
-                                    <div class="md-checkbox-inline">
-                                        {{range $i, $v := .resources}}
-                                            <div class="md-checkbox">
-                                                <input type="checkbox" name="resource_ids" value="{{$v.ID}}"
-                                                       id="checkbox1_{{$i}}" class="md-check">
-                                                <label for="checkbox1_{{$i}}">
-                                                    <span class="inc"></span>
-                                                    <span class="check"></span>
-                                                    <span class="box"></span> {{$v.Name}} </label>
-                                            </div>
-                                        {{end}}
+                                    <div class="portlet">
+                                        <div class="portlet-body">
+                                            <div id="tree" class="tree-demo"> </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -75,5 +68,4 @@
     </div>
     <!-- END CONTENT BODY -->
 </div>
-
 {{ template "layout/admin_footer" }}
