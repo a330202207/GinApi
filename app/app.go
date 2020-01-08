@@ -2,6 +2,7 @@ package app
 
 import (
 	"GinApi/config"
+	"GinApi/middleware/casbin"
 	"GinApi/model"
 	"GinApi/routes"
 	"fmt"
@@ -14,11 +15,14 @@ func Init() *gin.Engine {
 
 	engine := gin.New()
 
-	//初始化路由
-	routes.InitRouter(engine)
-
 	//加载服务
 	LoadServer()
+
+	//初始化权限
+	casbin.InitCasbin()
+
+	//初始化路由
+	routes.InitRouter(engine)
 
 	return engine
 }

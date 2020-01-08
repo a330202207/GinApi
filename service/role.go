@@ -10,13 +10,13 @@ type RoleInfo struct {
 	Name string `form:"name" json:"name" binding:"required"`
 }
 
-type RoleResource struct {
+type RoleMenu struct {
 	RoleInfo
-	ResourceIDs []string `form:"resource_ids" json:"resource_ids" binding:"required"`
+	MenuIDs []string `form:"menu_ids" json:"menu_ids" binding:"required"`
 }
 
 //添加角色
-func (roleInfo *RoleResource) RoleAdd() int {
+func (roleInfo *RoleMenu) RoleAdd() int {
 	name := map[string]interface{}{"name": roleInfo.Name, "status": 1}
 	isExist := model.ExistRole(name)
 
@@ -33,7 +33,7 @@ func (roleInfo *RoleResource) RoleAdd() int {
 		return error.ERROR_SQL_INSERT_FAIL
 	}
 
-	if model.AddRoleResource(roleID, roleInfo.ResourceIDs) != nil {
+	if model.AddRoleMenu(roleID, roleInfo.MenuIDs) != nil {
 		return error.ERROR_SQL_INSERT_FAIL
 	}
 
@@ -53,7 +53,7 @@ func (role *RoleInfo) RoleDel() int {
 		return error.ERROR_SQL_DELETE_FAIL
 	}
 
-	if model.DelRoleResource(role.ID) != nil {
+	if model.DelRoleMenu(role.ID) != nil {
 		return error.ERROR_SQL_DELETE_FAIL
 	}
 
@@ -70,7 +70,7 @@ func (role *RoleInfo) RoleEdit() (model.Role, int) {
 }
 
 //保存角色
-func (roleInfo *RoleResource) RoleSave() int {
+func (roleInfo *RoleMenu) RoleSave() int {
 	id := roleInfo.ID
 	role := model.Role{
 		Name: roleInfo.Name,
@@ -79,13 +79,15 @@ func (roleInfo *RoleResource) RoleSave() int {
 		return error.ERROR_SQL_UPDATE_FAIL
 	}
 
-	if model.DelRoleResource(roleInfo.RoleInfo.ID) != nil {
+	if model.DelRoleMenu(roleInfo.RoleInfo.ID) != nil {
 		return error.ERROR_SQL_INSERT_FAIL
 	}
 
-	if model.AddRoleResource(roleInfo.RoleInfo.ID, roleInfo.ResourceIDs) != nil {
+	if model.AddRoleMenu(roleInfo.RoleInfo.ID, roleInfo.MenuIDs) != nil {
 		return error.ERROR_SQL_INSERT_FAIL
 	}
+
+	//添加权限
 
 	return error.SUCCESS
 }

@@ -1,11 +1,12 @@
 package error
 
 const (
-	SUCCESS        = 200
-	ERROR          = 500
+	SUCCESS = 200
+	ERROR   = 500
+
 	INVALID_PARAMS = 400
 	NEED_LOGIN     = 401
-	UNPASS         = 403
+	NOPERMISSION   = 403
 	NOROUTE        = 404
 
 	//Token

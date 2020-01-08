@@ -9,10 +9,11 @@ type Admin struct {
 
 	UserName  string    `gorm:"default:''" json:"user_name"`    //管理员名称
 	Password  string    `gorm:"default:''" json:"password"`     //密码
+	Phone     string    `gorm:"default:''" json:"phone"`        //电话
 	CreateIp  string    `gorm:"default:''" json:"create_ip"`    //创建时IP
 	LoginIp   string    `gorm:"default:''" json:"login_ip"`     //登录时IP
 	LoginDate time.Time `gorm:"default:null" json:"login_date"` //登录日期
-	LoginsCnt int       `gorm:"default:0" json:"logins_cnt"`    //登录次数
+	LoginCnt  int       `gorm:"default:0" json:"login_cnt"`     //登录次数
 	Status    int       `gorm:"default:1" json:"status"`
 }
 

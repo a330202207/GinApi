@@ -39,20 +39,20 @@
 └── README.md  
 ```
 
-安装依赖包：
+### 项目设置
 
-日志：
-github.com/sirupsen/logrus
-github.com/lestrrat-go/file-rotatelogs
-github.com/rifflock/lfshook
+```
+//设置代理
+vim /etc/profile
 
-数据加密:
-golang.org/x/crypto/bcrypt
+export GOPROXY=https://goproxy.cn
 
-jwt:
-github.com/dgrijalva/jwt-go
+//进入项目，执行
+go mod download
 
-数据验证：
-github.com/go-ozzo/ozzo-validation
+//后台运行并输出日志
+nohup go run main.go > log.out 2>&1 &
 
-https://github.com/gin-contrib/cors
+//后台运行
+nohup go run main.go >/dev/null 2>&1 &
+```

@@ -11,12 +11,11 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="/admin/resource/resource_index.html">资源列表</a>
+                    <a href="/admin/menu/menu_index.html">菜单列表</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span>添加资源</span>
-                    <i class="fa fa-circle"></i>
+                    <span>添加菜单</span>
                 </li>
             </ul>
         </div>
@@ -31,16 +30,16 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <form class="form-horizontal" id="form" action="/admin/resource/add" method="post">
+                        <form class="form-horizontal" id="form" action="/admin/menu/add" method="post">
                             <div class="form-group">
                                 <label class="control-label col-md-3">
                                     父级菜单
                                     <span class="required" aria-required="true">*</span>
                                 </label>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <select class="bs-select form-control" name="p_id">
                                         <option value="0">顶级菜单</option>
-                                        {{range .resources}}
+                                        {{range .menus}}
                                             <option value="{{.ID}}">{{.Name}}</option>
                                         {{end}}
                                     </select>
@@ -49,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title">
-                                    资源名称
+                                    菜单名称
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-5">
@@ -61,7 +60,15 @@
                                     路由名称
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="resource_router" value="">
+                                    <input type="text" class="form-control" name="menu_router" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="title">
+                                    排序
+                                </label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="order_by" value="">
                                 </div>
                             </div>
                             <div class="form-group">

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"GinApi/config"
+	"GinApi/middleware/casbin"
 	"GinApi/middleware/cors"
 	"GinApi/middleware/session"
 	"GinApi/package/error"
@@ -16,32 +17,29 @@ func InitRouter(e *gin.Engine) {
 	//session
 	e.Use(session.Session())
 
-	// 使用 Logger 中间件
+	//使用 Logger 中间件
 	e.Use(gin.Logger())
 
-	// 使用 Recovery 中间件
+	//使用 Recovery 中间件
 	e.Use(gin.Recovery())
 
-	// 使用日志中间件
+	//使用日志中间件
 	//e.Use(logger.LoggerToFile())
 
-	// 登陆中间件
-	//e.Use(casbin2.CheckLoginHandle())
+	//权限中间件
+	e.Use(casbin.CheckLoginHandle(
+		casbin.AllowPathPrefixSkipper(casbin.NotCheckPermissionUrl()...),
+	))
 
-	// 跨域
+	//跨域
 	e.Use(cors.Cors())
 
-	// 设置环境
+	//设置环境
 	gin.SetMode(config.ServerSetting.RunMode)
 
-	// 模板函数
+	//模板函数
 	e.SetFuncMap(template.FuncMap{
 		"IntToTime": util.IntToTime,
-		//	"unescaped":   util.unescaped,
-		//	"strtime":     util.StrTime,
-		//	"plus1":       util.selfPlus,
-		//	"numplusplus": util.numPlusPlus,
-		//	"strip":       util.Long2IPString,
 	})
 
 	//404
@@ -79,7 +77,8 @@ func loadTemplate(e *gin.Engine) {
 	//加载views文件夹下所有的文件
 	e.LoadHTMLGlob("views/*/**/***")
 
-	// 推荐使用绝对路径 相当于简历了软连接--快捷方式
 	e.StaticFS("/static", http.Dir("./static"))
 	e.StaticFS("/upload", http.Dir("./upload"))
+	e.StaticFile("favicon.ico", "/static/favicon.ico")
+
 }

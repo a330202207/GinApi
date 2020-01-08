@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"GinApi/middleware/casbin"
 	"GinApi/model"
 	"GinApi/package/error"
 	"GinApi/service"
@@ -32,11 +33,11 @@ func AdminLogin(c *gin.Context) {
 		return
 	}
 
-	nowLoginsCnt := admin.LoginsCnt
+	nowLoginCnt := admin.LoginCnt
 	loginInfo := model.Admin{
 		LoginDate: time.Now(),
 		LoginIp:   c.ClientIP(),
-		LoginsCnt: nowLoginsCnt + 1,
+		LoginCnt:  nowLoginCnt + 1,
 	}
 
 	if err := model.UpdateLoginInfo(admin.ID, loginInfo); err != nil {
@@ -45,9 +46,15 @@ func AdminLogin(c *gin.Context) {
 
 	s := sessions.Default(c)
 	s.Clear()
-	s.Set("user_id", admin.ID)
+	s.Set("admin_id", admin.ID)
 	s.Save()
-	util.JsonSuccessResponse(c, errCode, map[string]int{"user_id": admin.ID})
+
+	err := casbin.AddRoleForUser(admin.ID)
+	if err != nil {
+		util.JsonErrResponse(c, error.ERROR)
+	}
+
+	util.JsonSuccessResponse(c, errCode, map[string]int{"admin_id": admin.ID})
 }
 
 //登出

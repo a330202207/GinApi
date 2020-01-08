@@ -89,7 +89,7 @@ func AdminEdit(c *gin.Context) {
 
 	roles, _ := model.GetAllRoles()
 
-	myRoles, _ := model.GetAdminRoles(id)
+	myRoles, _ := model.GetAdminRoles(map[string]interface{}{"admin_id": id})
 
 	if id != 0 || err != nil {
 		if info, errCode := account.AdminEdit(); errCode != 200 {

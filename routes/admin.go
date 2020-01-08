@@ -33,7 +33,7 @@ func RegisterBackendRouter(e *gin.Engine) {
 		//删除管理员
 		admin.POST("/admin/del", backend.AdminDel)
 
-		//编辑管理员页面
+		//编辑管理员页
 		admin.GET("/admin/admin_edit.html", backend.AdminEdit)
 
 		//保存管理员信息
@@ -54,35 +54,38 @@ func RegisterBackendRouter(e *gin.Engine) {
 		//删除角色
 		admin.POST("/role/del", backend.RoleDel)
 
-		//编辑角色页面
+		//编辑角色页
 		admin.GET("/role/role_edit.html", backend.RoleEdit)
 
-		//获取当前角色资源
-		admin.GET("/role/myResources", backend.MyResources)
+		//获取当前角色菜单
+		admin.GET("/role/myMenus", backend.MyMenus)
 
 		//保存角色
 		admin.POST("/role/save", backend.RoleSave)
 
-		//资源列表页
-		admin.GET("/resource/resource_index.html", backend.GetResourceList)
+		//菜单列表页
+		admin.GET("/menu/menu_index.html", backend.GetMenuList)
 
-		//获取资源树结构
-		admin.GET("/resource/resources", backend.GetTreeResources)
+		//获取菜单树结构
+		admin.GET("/menu/menus", backend.GetTreeMenus)
 
-		//添加资源页
-		admin.GET("/resource/resource_create.html", backend.ResourceCreate)
+		//添加菜单页
+		admin.GET("/menu/menu_create.html", backend.MenuCreate)
 
-		//添加资源
-		admin.POST("/resource/add", backend.ResourceAdd)
+		//添加菜单
+		admin.POST("/menu/add", backend.MenuAdd)
 
-		//删除资源
-		admin.POST("/resource/del", backend.ResourceDel)
+		//添加下级菜单页
+		admin.GET("/menu/menu_add.html", backend.AddMenu)
 
-		//编辑资源页
-		admin.GET("/resource/resource_edit.html", backend.ResourceEdit)
+		//删除菜单
+		admin.POST("/menu/del", backend.MenuDel)
 
-		//保存资源
-		admin.POST("/resource/save", backend.ResourceSave)
+		//编辑菜单页
+		admin.GET("/menu/menu_edit.html", backend.MenuEdit)
+
+		//保存菜单
+		admin.POST("/menu/save", backend.MenuSave)
 
 	}
 }

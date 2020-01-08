@@ -7,11 +7,11 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="/admin/resource/resource_index.html">首页</a>
+                    <a href="/admin/menu/menu_index.html">首页</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="/admin/resource/resource_index.html">资源列表</a>
+                    <a href="/admin/menu/menu_index.html">菜单列表</a>
                     <i class="fa fa-circle"></i>
                 </li>
             </ul>
@@ -23,21 +23,21 @@
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            资源列表
+                            菜单列表
                         </div>
                     </div>
                     <div class="portlet-body">
                         <div class="table-toolbar">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="/admin/resource/resource_create.html" class="btn btn-circle green"> 添加资源
+                                    <a href="/admin/menu/menu_create.html" class="btn btn-circle green"> 添加菜单
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="dataTables_wrapper no-footer">
-                            <form action="/admin/resource/resource_index.html" method="get" id="search">
+                            <form action="/admin/menu/menu_index.html" method="get" id="search">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-1">
                                         <div id="sample_1_filter" class="dataTables_filter">
@@ -60,32 +60,32 @@
                                         <thead>
                                         <tr role="row" class="heading">
                                             <th width="5%"> ID</th>
-                                            <th width="5%"> 上级菜单</th>
                                             <th width="5%"> 名称</th>
                                             <th width="15%"> 路由</th>
+                                            <th width="5%"> 排序</th>
                                             <th width="10%"> 操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
-                                        {{range .resources}}
-                                            <tr role="row" class="{{if eq .PID 0 }} success {{else}} odd {{end}}">
+                                        {{range .menus}}
+                                            <tr role="row" class="odd">
                                                 <td class="sorting_1">{{.ID}}</td>
-                                                <td>
-                                                    {{if gt .PID 0}}
-                                                        {{.PID}}
-                                                    {{end}}
-                                                </td>
                                                 <td>{{.Name}}</td>
-                                                <td>{{.ResourceRouter}}</td>
+                                                <td>{{.MenuRouter}}</td>
+                                                <td>{{.OrderBy}}</td>
                                                 <td>
-                                                    <a href="/admin/resource/resource_edit.html?id={{.ID}}"
+                                                    <a href="/admin/menu/menu_edit.html?id={{.ID}}"
                                                        class="btn btn-circle btn-icon-only red" title="编辑">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a url="/admin/resource/del" data-id="{{.ID}}"
+                                                    <a url="/admin/menu/del" data-id="{{.ID}}"
                                                        class="btn btn-circle btn-icon-only purple del" title="删除">
                                                         <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                    <a href="/admin/menu/menu_add.html?id={{.ID}}"
+                                                       class="btn btn-circle btn-icon-only green" title="添加菜单">
+                                                        <i class="fa fa-plus"></i>
                                                     </a>
                                                 </td>
                                             </tr>

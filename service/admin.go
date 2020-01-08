@@ -31,6 +31,7 @@ type UserName struct {
 
 type AdminInfo struct {
 	ID       int      `form:"id" json:"id"`
+	Phone    string   `json:"Phone"`
 	CreateIp string   `json:"login_ip"`
 	RoleIDs  []string `form:"role_ids" json:"role_ids" binding:"required"`
 	Status   int      `form:"status" json:"status" binding:"required"`

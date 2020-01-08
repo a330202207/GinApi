@@ -44,19 +44,17 @@
         <link href="/static/css/components.min.css" rel="stylesheet" type="text/css"/>
         <link href="/static/css/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color"/>
 
-        <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="favicon.ico"/>
     </head>
     <!-- 头部结束 -->
 
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
     <!-- 顶部开始 -->
-    {{template "layout/top_sidebar"}}
+    {{template "layout/top_sidebar" .}}
     <!-- 顶部结束 -->
     <div class="clearfix"></div>
     <!-- BEGIN CONTAINER -->
     <div class="page-container">
         <!-- 左侧菜单开始 -->
-        {{template "layout/left_sidebar"}}
+        {{template "layout/left_sidebar" .}}
         <!-- 左侧菜单结束 -->
 {{end}}

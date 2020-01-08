@@ -2,7 +2,7 @@ var UITree = function () {
 
     var getTreeData = function () {
         $.ajax({
-            url: "/admin/resource/resources",
+            url: "/admin/menu/menus",
             type: "get",
             success: function (res) {
                 if (res) {
@@ -27,10 +27,9 @@ var UITree = function () {
         }).on('ready.jstree', function(e, data){
             var id = $("#id").val();
             $.ajax({
-                url: "/admin/role/myResources?id=" + id,
+                url: "/admin/role/myMenus?id=" + id,
                 type: "get",
                 success: function (res) {
-                    console.log(res.data);
                     $('#tree').jstree('open_all');
                     $.each(res.data,function(index,data){//遍历数据
                         var node = $('#tree').jstree("get_node", data.resource_id);

@@ -37,9 +37,14 @@ func AddAdminRole(adminId int, roleIds []string) (err error) {
 	return
 }
 
+func GetAdminRole(maps interface{}) (role AdminRole, err error) {
+	err = DB.Unscoped().Where(maps).First(&role).Error
+	return
+}
+
 //获取全部管理员-角色
-func GetAdminRoles(adminID int) (roles []AdminRole, err error) {
-	err = DB.Unscoped().Where("admin_id = ?", adminID).Find(&roles).Error
+func GetAdminRoles(maps interface{}) (roles []AdminRole, err error) {
+	err = DB.Unscoped().Where(maps).Find(&roles).Error
 	return
 }
 

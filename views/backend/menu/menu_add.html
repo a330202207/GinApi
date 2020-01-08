@@ -11,11 +11,11 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="/admin/resource/resource_index.html">资源列表</a>
+                    <a href="/admin/menu/menu_index.html">菜单列表</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span>添加资源</span>
+                    <span>添加菜单</span>
                     <i class="fa fa-circle"></i>
                 </li>
             </ul>
@@ -31,31 +31,24 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <form class="form-horizontal" id="form" action="/admin/resource/save" method="post">
-                            <input type="hidden" name="id" value="{{.info.ID}}">
+                        <form class="form-horizontal" id="form" action="/admin/menu/add" method="post">
+                            <input type="hidden" name="p_id" value="{{.info.ID}}">
                             <div class="form-group">
                                 <label class="control-label col-md-3">
                                     父级菜单
                                     <span class="required" aria-required="true">*</span>
                                 </label>
-                                <div class="col-md-4">
-                                    <select class="bs-select form-control" name="p_id">
-                                        <option value="0">顶级菜单</option>
-                                        {{$pid := .info.PID}}
-                                        {{range .resources}}
-                                            <option value="{{.ID}}" {{if eq .ID $pid}} selected {{end}}>{{.Name}}</option>
-                                        {{end}}
-                                    </select>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" name="name" value="{{.info.Name}}">
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title">
-                                    资源名称
+                                    菜单名称
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="name" value="{{.info.Name}}">
+                                    <input type="text" class="form-control" name="name" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -63,8 +56,15 @@
                                     路由名称
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="resource_router"
-                                           value="{{.info.ResourceRouter}}">
+                                    <input type="text" class="form-control" name="menu_router" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="title">
+                                    排序
+                                </label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="order_by" value="">
                                 </div>
                             </div>
                             <div class="form-group">

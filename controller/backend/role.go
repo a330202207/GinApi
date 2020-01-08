@@ -6,7 +6,6 @@ import (
 	"GinApi/package/error"
 	"GinApi/service"
 	"GinApi/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"math"
@@ -29,7 +28,6 @@ func GetRoleList(c *gin.Context) {
 	}
 
 	query, args, _ := util.WhereBuild(data)
-	fmt.Println(query, args)
 	roles, count, _ := model.GetRoleList(pageSize, Offset, "created_at desc", query, args...)
 
 	totalPage := int(math.Ceil(float64(count) / float64(pageSize)))
@@ -46,16 +44,16 @@ func GetRoleList(c *gin.Context) {
 
 //添加角色页
 func RoleCreate(c *gin.Context) {
-	resources, _ := model.GetResources(map[string]interface{}{})
+	menus, _ := model.GetMenus(map[string]interface{}{})
 	c.HTML(http.StatusOK, "role_create.html", gin.H{
-		"action":    "add",
-		"resources": resources,
+		"action": "add",
+		"menus":  menus,
 	})
 }
 
 //添加角色
 func RoleAdd(c *gin.Context) {
-	var role service.RoleResource
+	var role service.RoleMenu
 	if err := c.ShouldBind(&role); err == nil {
 		resCode := role.RoleAdd()
 		util.HtmlResponse(c, resCode)
@@ -79,23 +77,22 @@ func RoleDel(c *gin.Context) {
 
 //编辑角色页
 func RoleEdit(c *gin.Context) {
-	var role service.RoleResource
+	var role service.RoleMenu
 	id, err := strconv.Atoi(c.Query("id"))
 	role.ID = id
 
-	resources, _ := model.GetResources(map[string]interface{}{})
-	myResources, _ := model.GetRoleResources(id)
+	menus, _ := model.GetMenus(map[string]interface{}{})
+	myMenus, _ := model.GetRoleMenus(map[string]interface{}{"role_id": id})
 
 	if id != 0 || err != nil {
 		if info, errCode := role.RoleEdit(); errCode != 200 {
 			util.JsonErrResponse(c, errCode)
 		} else {
 			c.HTML(http.StatusOK, "role_edit.html", gin.H{
-				"action":      "edit",
-				"title":       "编辑",
-				"info":        info,
-				"resources":   resources,
-				"myResources": myResources,
+				"action":  "edit",
+				"info":    info,
+				"menus":   menus,
+				"myMenus": myMenus,
 			})
 		}
 	} else {
@@ -103,21 +100,20 @@ func RoleEdit(c *gin.Context) {
 	}
 }
 
-func MyResources(c *gin.Context) {
+func MyMenus(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Query("id"))
 
-	myResources, _ := model.GetRoleResources(id)
-	util.JsonSuccessResponse(c, error.SUCCESS, myResources)
+	myMenus, _ := model.GetRoleMenus(map[string]interface{}{"role_id": id})
+	util.JsonSuccessResponse(c, error.SUCCESS, myMenus)
 }
 
 //保存角色
 func RoleSave(c *gin.Context) {
-	var role service.RoleResource
+	var role service.RoleMenu
 	if err := c.ShouldBind(&role); err == nil {
 		resCode := role.RoleSave()
 		util.HtmlResponse(c, resCode)
 	} else {
-		fmt.Println(err)
 		util.JsonErrResponse(c, error.INVALID_PARAMS)
 	}
 }

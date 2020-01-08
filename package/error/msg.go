@@ -3,7 +3,7 @@ package error
 var MsgFlags = map[int]string{
 	SUCCESS:        "操作成功",
 	ERROR:          "系统错误",
-	UNPASS:         "未通过验证",
+	NOPERMISSION:   "没有访问权限",
 	NEED_LOGIN:     "需要登录",
 	INVALID_PARAMS: "请求参数错误",
 	NOROUTE:        "找不到该路由",

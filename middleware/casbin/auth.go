@@ -1,50 +1,78 @@
 package casbin
 
 import (
-	//"fmt"
+	"GinApi/package/error"
+	"GinApi/util"
+	"GinApi/util/convert"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	//"github.com/casbin/casbin"
 	"net/http"
 	"strings"
 )
 
-func CheckLoginHandle() gin.HandlerFunc {
+// SkipperFunc 定义中间件跳过函数
+type SkipperFunc func(*gin.Context) bool // SkipperFunc 定义中间件跳过函数
+
+func NotCheckPermissionUrl() (notCheckPermissionUrlArr []string) {
+
+	apiPrefix := "/admin"
+
+	notCheckPermissionUrlArr = append(notCheckPermissionUrlArr, "/static")
+	notCheckPermissionUrlArr = append(notCheckPermissionUrlArr, apiPrefix+"/backend_login.html")
+	notCheckPermissionUrlArr = append(notCheckPermissionUrlArr, apiPrefix+"/login")
+	notCheckPermissionUrlArr = append(notCheckPermissionUrlArr, apiPrefix+"/logout")
+	notCheckPermissionUrlArr = append(notCheckPermissionUrlArr, apiPrefix+"/menu/menus")
+	notCheckPermissionUrlArr = append(notCheckPermissionUrlArr, apiPrefix+"/role/myMenus")
+	return
+}
+
+//检查请求路径是否包含指定的前缀，如果包含则跳过
+func AllowPathPrefixSkipper(prefixes ...string) SkipperFunc {
+	return func(c *gin.Context) bool {
+		path := c.Request.URL.Path
+		for _, p := range prefixes {
+			if strings.HasPrefix(path, p) {
+				return true
+			}
+		}
+		return false
+	}
+}
+
+func CheckLoginHandle(skipper ...SkipperFunc) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
-		//e := casbin.NewEnforcer("./configs/rbac.conf", "./configs/rbac_policy.csv")
-
 		//获取请求的URL
 		objUrl := c.Request.URL.RequestURI()
 
-		if strings.HasPrefix(objUrl, "/static") || strings.HasPrefix(objUrl, "/admin/backend_login.html") || strings.HasPrefix(objUrl, "/admin/login") {
+		if len(skipper) > 0 && skipper[0](c) {
 			c.Next()
 			return
 		}
 
-		//获取请求方法
-		//act := c.Request.Method
-
 		//获取用户角色
 		s := sessions.Default(c)
+		adminId := s.Get("admin_id")
 
-		userId := s.Get("user_id")
-
-		if userId == nil {
+		if nil == adminId {
 			c.Redirect(http.StatusTemporaryRedirect, "/admin/backend_login.html")
 			return
 		}
 
-		//管理员角色
-		//sub := userId.(string)
-		//
-		////判断权限
-		//if e.Enforce(sub, objUrl, act) {
-		//	fmt.Println("通过权限")
-		//	c.Next()
-		//} else {
-		//	fmt.Println("权限没有通过")
-		//	c.Abort()
-		//}
+		//获取请求方法
+		act := c.Request.Method
+		res, err := CheckPermission(convert.ToString(adminId), objUrl, act)
+		//fmt.Print("res:", res)
+
+		//判断权限
+		if err != nil {
+			util.JsonErrResponse(c, error.ERROR)
+			c.Abort()
+			return
+		} else if !res {
+			util.JsonErrResponse(c, error.NOPERMISSION)
+			c.Abort()
+			return
+		}
+		c.Next()
 	}
 }
