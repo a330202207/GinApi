@@ -61,7 +61,6 @@ func CheckLoginHandle(skipper ...SkipperFunc) gin.HandlerFunc {
 		//获取请求方法
 		act := c.Request.Method
 		res, err := CheckPermission(convert.ToString(adminId), objUrl, act)
-		//fmt.Print("res:", res)
 
 		//判断权限
 		if err != nil {

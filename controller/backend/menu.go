@@ -6,7 +6,6 @@ import (
 	"GinApi/package/error"
 	"GinApi/service"
 	"GinApi/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"math"
@@ -130,6 +129,5 @@ func MenuSave(c *gin.Context) {
 //获取菜单树
 func GetTreeMenus(c *gin.Context) {
 	list := service.GetTreeMenus()
-	fmt.Print("list:", list)
 	util.JsonSuccessResponse(c, error.SUCCESS, list)
 }

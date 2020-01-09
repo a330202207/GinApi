@@ -7,7 +7,7 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="/admin/admin/backend_index.html">首页</a>
+                    <a href="/admin/backend_index.html">首页</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -43,6 +43,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3 control-label" for="title">
+                                    电话
+                                    <span class="required" aria-required="true">*</span>
+                                </label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="phone" value="{{.info.Phone}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3 control-label" for="form_control_1">角色</label>
                                 <div class="col-md-9">
                                     <div class="md-checkbox-inline">
@@ -67,16 +76,16 @@
                                 <div class="col-md-9">
                                     <div class="md-radio-list">
                                         <div class="md-radio">
-                                            <input type="radio" id="checkbox1_6" name="status" value="2"
-                                                   class="md-radiobtn" {{if eq .info.Status 2}} checked {{end}}>
+                                            <input type="radio" id="checkbox1_6" name="status" value="1"
+                                                   class="md-radiobtn" {{if eq .info.Status 1}} checked {{end}}>
                                             <label for="checkbox1_6">
                                                 <span class="inc"></span>
                                                 <span class="check"></span>
                                                 <span class="box"></span> 是 </label>
                                         </div>
                                         <div class="md-radio">
-                                            <input type="radio" id="checkbox1_7" name="status" value="1"
-                                                   class="md-radiobtn" {{if eq .info.Status 1}} checked {{end}}>
+                                            <input type="radio" id="checkbox1_7" name="status" value="2"
+                                                   class="md-radiobtn" {{if eq .info.Status 2}} checked {{end}}>
                                             <label for="checkbox1_7">
                                                 <span class="inc"></span>
                                                 <span class="check"></span>

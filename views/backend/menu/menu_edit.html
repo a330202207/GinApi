@@ -15,7 +15,8 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <span>添加菜单</span>
+                    <span>编辑菜单</span>
+                    <i class="fa fa-circle"></i>
                 </li>
             </ul>
         </div>
@@ -30,21 +31,18 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <form class="form-horizontal" id="form" action="/admin/menu/add" method="post">
+                        <form class="form-horizontal" id="form" action="/admin/menu/save" method="post">
+                            <input type="hidden" name="id" value="{{.info.ID}}">
                             <div class="form-group">
-                                <label class="control-label col-md-3">
+                                <label class="col-md-3 control-label" for="title">
                                     父级菜单
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-5">
-                                    <select class="bs-select form-control" name="p_id">
-                                        <option value="0">顶级菜单</option>
-                                        {{range .menus}}
-                                            <option value="{{.ID}}">{{.Name}}</option>
-                                        {{end}}
-                                    </select>
+                                    <input type="text" disabled class="form-control" name="name" value=
+                                    "{{if eq .menu.ParentId 0}} 顶级菜单 {{else}} {{.menu.Name}} {{end}}">
+                                    <input type="hidden" name="p_id" value="{{.menu.ID}}">
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="title">
@@ -52,7 +50,7 @@
                                     <span class="required" aria-required="true">*</span>
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="name" value="">
+                                    <input type="text" class="form-control" name="name" value="{{.info.Name}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,7 +58,8 @@
                                     路由名称
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="menu_router" value="">
+                                    <input type="text" {{if eq .menu.ParentId 0}} disabled {{end}} class="form-control" name="menu_router"
+                                           value="{{.info.MenuRouter}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -68,7 +67,8 @@
                                     排序
                                 </label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="order_by" value="">
+                                    <input type="text" class="form-control" name="order_by"
+                                           value="{{.info.OrderBy}}">
                                 </div>
                             </div>
                             <div class="form-group">

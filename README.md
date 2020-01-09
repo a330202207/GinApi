@@ -56,3 +56,9 @@ nohup go run main.go > log.out 2>&1 &
 //后台运行
 nohup go run main.go >/dev/null 2>&1 &
 ```
+
+### 权限管理配置
+配置文件：middleware/casbin/casbin.go
+
+
+https://casbin.org/docs/zh-CN/function

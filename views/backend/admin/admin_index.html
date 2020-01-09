@@ -7,7 +7,7 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="/admin/admin/backend_index.html">首页</a>
+                    <a href="/admin/backend_index.html">首页</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -61,6 +61,7 @@
                                         <tr role="row" class="heading">
                                             <th width="5%"> ID</th>
                                             <th width="15%"> 管理员名称</th>
+                                            <th width="5%"> 电话</th>
                                             <th width="5%"> 状态</th>
                                             <th width="10%"> 创建时间</th>
                                             <th width="5%"> 创建IP</th>
@@ -77,6 +78,7 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{.ID}}</td>
                                                 <td>{{.UserName}}</td>
+                                                <td>{{.Phone}}</td>
                                                 <td>
                                                     {{if eq .Status 1}}
                                                         <span class="label label-sm label-danger">启用</span>
@@ -99,7 +101,7 @@
                                                        class="btn btn-circle btn-icon-only yellow" title="修改密码">
                                                         <i class="fa fa-search"></i>
                                                     </a>
-                                                    <a url="/admin/del" data-id="{{.ID}}"
+                                                    <a url="/admin/admin/del" data-id="{{.ID}}"
                                                        class="btn btn-circle btn-icon-only purple del" title="删除">
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>

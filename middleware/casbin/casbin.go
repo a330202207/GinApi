@@ -3,6 +3,7 @@ package casbin
 import (
 	"GinApi/model"
 	"GinApi/util/convert"
+	"fmt"
 	"github.com/casbin/casbin"
 )
 
@@ -26,8 +27,9 @@ func InitCasbin() (err error) {
 	e = some(where (p.eft == allow))
 	
 	[matchers]
-	m = r.sub == p.sub && regexMatch(r.act, p.act)`
+	m = g(r.sub, p.sub) && regexMatch(r.act, p.act)`
 
+	//m = r.sub == p.sub && regexMatch(r.act, p.act)
 	enforcer, err = casbin.NewEnforcerSafe(
 		casbin.NewModel(casbinModel),
 	)
@@ -35,6 +37,7 @@ func InitCasbin() (err error) {
 		return
 	}
 	list, err := model.GetRoleMenus(map[string]interface{}{})
+	fmt.Println("list:", list)
 	if err != nil {
 		return
 	}
@@ -59,11 +62,16 @@ func setRolePermission(e *casbin.Enforcer, roleId, menuId int) {
 	if err != nil {
 		return
 	}
+	fmt.Println("roleId:", roleId)
+	fmt.Println("MenuRouter:", menu.MenuRouter)
 	e.AddPermissionForUser(convert.ToString(roleId), menu.MenuRouter, "GET|POST")
 }
 
 //检查用户是否有权限
 func CheckPermission(adminId, url, methodtype string) (bool, error) {
+	fmt.Println("adminId:", adminId)
+	fmt.Println("url:", url)
+	fmt.Println("methodtype:", methodtype)
 	return Enforcer.EnforceSafe(adminId, url, methodtype)
 }
 
@@ -75,7 +83,6 @@ func AddRoleForUser(adminId int) (err error) {
 	Enforcer.DeleteRolesForUser(convert.ToString(adminId))
 
 	list, err := model.GetAdminRoles(map[string]interface{}{"admin_id": adminId})
-
 	if err != nil {
 		return
 	}

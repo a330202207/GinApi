@@ -51,7 +51,6 @@ func (r *Menu) GetTreeMenus(pid interface{}) []*TreeMenus {
 	treeList := []*TreeMenus{}
 
 	for _, v := range menus {
-
 		child := v.GetTreeMenus(v.ID)
 		node := &TreeMenus{
 			ID:         v.ID,
