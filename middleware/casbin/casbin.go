@@ -37,7 +37,6 @@ func InitCasbin() (err error) {
 		return
 	}
 	list, err := model.GetRoleMenus(map[string]interface{}{})
-	fmt.Println("list:", list)
 	if err != nil {
 		return
 	}
@@ -62,8 +61,6 @@ func setRolePermission(e *casbin.Enforcer, roleId, menuId int) {
 	if err != nil {
 		return
 	}
-	fmt.Println("roleId:", roleId)
-	fmt.Println("MenuRouter:", menu.MenuRouter)
 	e.AddPermissionForUser(convert.ToString(roleId), menu.MenuRouter, "GET|POST")
 }
 
