@@ -62,3 +62,11 @@ nohup go run main.go >/dev/null 2>&1 &
 
 
 https://casbin.org/docs/zh-CN/function
+
+
+##后台地址
+localhost/admin/backend_login.html
+
+账户：admin
+
+密码：123456
